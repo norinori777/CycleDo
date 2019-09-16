@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CycleDo</string>
+    <string name="toolbar_subtitle">必ず覚えられる</string>
+    <string name="tv_display">表示</string>
+    <string-array name="life_cycle">
+        <item>ALL</item>
+        <item>1</item>
+        <item>4</item>
+        <item>7</item>
+        <item>11</item>
+        <item>20</item>
+    </string-array>
+    <string name="category">カテゴリー</string>
+    <string name="tv_cycle_title">サイクル</string>
+    <string name="tv_start_title">開始</string>
+    <string name="tv_add_title">タイトル</string>
+    <string name="tv_add_content">内容</string>
+    <string name="bt_add">登録</string>
+    <string name="bt_cancel">キャンセル</string>
+</resources>
