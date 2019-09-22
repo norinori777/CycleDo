@@ -17,4 +17,6 @@
     <string name="tv_add_content">内容</string>
     <string name="bt_add">登録</string>
     <string name="bt_cancel">キャンセル</string>
+    <string name="err_title">タイトルを入力してください。</string>
+    <string name="err_content">内容を入力してください。</string>
 </resources>

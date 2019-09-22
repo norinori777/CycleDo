@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import norinori6791.gmail.com.cycledo.Util.ToolbarSet
 import norinori6791.gmail.com.cycledo.databinding.ActivityShowTaskBinding
-import norinori6791.gmail.com.cycledo.model.Item
+import norinori6791.gmail.com.cycledo.model.Task
 
 class ShowTaskActivity : AppCompatActivity() {
 
@@ -17,7 +17,7 @@ class ShowTaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_show_task)
         val binding: ActivityShowTaskBinding = DataBindingUtil.setContentView(this, R.layout.activity_show_task)
-        val item:Item = intent.getSerializableExtra("item") as Item
+        val item:Task = intent.getSerializableExtra("item") as Task
         binding.item = item
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar3)

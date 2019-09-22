@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="item" type="norinori6791.gmail.com.cycledo.model.Item" />
+        <variable name="item" type="norinori6791.gmail.com.cycledo.model.Task" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

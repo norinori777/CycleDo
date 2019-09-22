@@ -14,7 +14,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
     override fun onCreate(db: SQLiteDatabase){
         var sb = StringBuilder()
         sb.append("CREATE TABLE TASK (")
-        sb.append("id INTEGER PRIMARY KEY AUTOINCREMENT,")
+        sb.append("_id INTEGER PRIMARY KEY AUTOINCREMENT,")
         sb.append("category INTEGER,")
         sb.append("title TEXT,")
         sb.append("content TEXT,")
