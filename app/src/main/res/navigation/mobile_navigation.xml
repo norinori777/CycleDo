@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_list">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_list"
         android:name="com.google.norinori6791.cycledo.ui.list.ListFragment"
         android:label="@string/menu_list"
         tools:layout="@layout/fragment_list" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.google.norinori6791.cycledo.ui.gallery.AddFragment"
+        android:id="@+id/nav_add"
+        android:name="com.google.norinori6791.cycledo.ui.add.AddFragment"
         android:label="@string/menu_add"
         tools:layout="@layout/fragment_add" />
 
