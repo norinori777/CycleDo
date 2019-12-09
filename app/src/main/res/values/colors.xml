@@ -3,9 +3,4 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorOneCycle">#87EED6</color>
-    <color name="colorTwoCycle">#6DE6DC</color>
-    <color name="colorTreeCycle">#40BEB0</color>
-    <color name="colorFourCycle">#21A396</color>
-    <color name="colorFiveCycle">#0F9C8F</color>
 </resources>

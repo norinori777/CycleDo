@@ -1,22 +1,16 @@
 <resources>
     <string name="app_name">CycleDo</string>
-    <string name="toolbar_subtitle">必ず覚えられる</string>
-    <string name="tv_display">表示</string>
-    <string-array name="life_cycle">
-        <item>ALL</item>
-        <item>1</item>
-        <item>4</item>
-        <item>7</item>
-        <item>11</item>
-        <item>20</item>
-    </string-array>
-    <string name="category">カテゴリー</string>
-    <string name="tv_cycle_title">サイクル</string>
-    <string name="tv_start_title">開始</string>
-    <string name="tv_add_title">タイトル</string>
-    <string name="tv_add_content">内容</string>
-    <string name="bt_add">登録</string>
-    <string name="bt_cancel">キャンセル</string>
-    <string name="err_title">タイトルを入力してください。</string>
-    <string name="err_content">内容を入力してください。</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>
