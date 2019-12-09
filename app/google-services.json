@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "943853673532",
+    "firebase_url": "https://cycledo-e81e0.firebaseio.com",
+    "project_id": "cycledo-e81e0",
+    "storage_bucket": "cycledo-e81e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943853673532:android:f267a0d19491802d517739",
+        "android_client_info": {
+          "package_name": "com.google.norinori6791.cycledo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943853673532-fsln0f1pve6eg0o8bj52c0e2t4s9gk35.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.norinori6791.cycledo",
+            "certificate_hash": "09722b77b37b922ba04c52d61033e1be5527ae95"
+          }
+        },
+        {
+          "client_id": "943853673532-9o4d3vin8137j8jvg6gvoihv4jrdj5r9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOyW7Pip82dVDzpLo6zTLHUKoSIQKqCpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943853673532-9o4d3vin8137j8jvg6gvoihv4jrdj5r9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
