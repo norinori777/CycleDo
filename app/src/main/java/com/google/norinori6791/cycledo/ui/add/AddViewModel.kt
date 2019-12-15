@@ -1,5 +1,6 @@
 package com.google.norinori6791.cycledo.ui.add
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,6 +36,12 @@ class AddViewModel : ViewModel() {
     var insertImage = MutableLiveData<Boolean>()
     var insertLink = MutableLiveData<Boolean>()
     var insertCheckBox = MutableLiveData<Boolean>()
+
+    var showEditMenu = ObservableBoolean(false)
+
+    fun changeEditMenu(hasFocus: Boolean){
+        showEditMenu.set(hasFocus)
+    }
 
     fun updateContent(text: String){
         content = text
@@ -96,7 +103,7 @@ class AddViewModel : ViewModel() {
     }
 
     fun clickTextColor(){
-        if(textColor?.value == null){
+        if(textColor.value == null){
             textColor.value ?: textColor.postValue(false)
             return
         }
@@ -105,7 +112,7 @@ class AddViewModel : ViewModel() {
     }
 
     fun clickBackGroundColor(){
-        if(bgColor?.value == null){
+        if(bgColor.value == null){
             bgColor.postValue(false)
             return
         }

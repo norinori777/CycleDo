@@ -69,11 +69,11 @@ class AddFragment : Fragment() {
         })
         addViewModel.textColor.observe(this, Observer {
             if(it!!)databinding.richEditor.setTextColor(Color.BLACK)
-            if(!it!!)databinding.richEditor.setTextColor(Color.RED)
+            if(!it)databinding.richEditor.setTextColor(Color.RED)
         })
         addViewModel.bgColor.observe(this, Observer {
             if(it!!)databinding.richEditor.setTextBackgroundColor(Color.TRANSPARENT)
-            if(!it!!)databinding.richEditor.setTextBackgroundColor(Color.YELLOW)
+            if(!it)databinding.richEditor.setTextBackgroundColor(Color.YELLOW)
         })
         addViewModel.indent.observe(this, Observer {
             databinding.richEditor.setIndent()
