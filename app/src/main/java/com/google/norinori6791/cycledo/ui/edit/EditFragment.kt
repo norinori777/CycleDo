@@ -1,39 +1,36 @@
-package com.google.norinori6791.cycledo.ui.add
+package com.google.norinori6791.cycledo.ui.edit
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.norinori6791.cycledo.R
-import com.google.norinori6791.cycledo.databinding.FragmentAddBinding
+import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 
-class AddFragment : Fragment() {
+class EditFragment : Fragment() {
 
-    private lateinit var addViewModel: AddViewModel
-    lateinit var databinding: FragmentAddBinding
-    private var toolbar: Toolbar? = null
-    private var addView: View? = null
+    private lateinit var editViewModel: EditViewModel
+    lateinit var databinding: FragmentEditBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        addViewModel =
-            ViewModelProviders.of(this).get(AddViewModel::class.java)
+        editViewModel =
+            ViewModelProviders.of(this).get(EditViewModel::class.java)
 
         richEditorMenuObserve()
         taskCrudObserve()
 
-        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add, container, false)
+        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
         databinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))
 
-        databinding.viewModel = addViewModel
+        databinding.viewModel = editViewModel
 
         return databinding.root
     }
@@ -54,100 +51,100 @@ class AddFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_add -> addViewModel.addTask()
+            R.id.action_add -> editViewModel.addTask()
             else -> super.onOptionsItemSelected(item)
         }
         return true
     }
 
     fun taskCrudObserve(){
-        addViewModel.onCompleteAddTask.observe(this, Observer {
+        editViewModel.onCompleteAddTask.observe(this, Observer {
             Toast.makeText(activity, "登録しました。", Toast.LENGTH_LONG).show()
         })
     }
 
     fun richEditorMenuObserve(){
-        addViewModel.undo.observe(this, Observer {
+        editViewModel.undo.observe(this, Observer {
             databinding.richEditor.undo()
         })
-        addViewModel.redo.observe(this, Observer {
+        editViewModel.redo.observe(this, Observer {
             databinding.richEditor.redo()
         })
-        addViewModel.bold.observe(this, Observer {
+        editViewModel.bold.observe(this, Observer {
             databinding.richEditor.setBold()
         })
-        addViewModel.italic.observe(this, Observer {
+        editViewModel.italic.observe(this, Observer {
             databinding.richEditor.setItalic()
         })
-        addViewModel.subScript.observe(this, Observer {
+        editViewModel.subScript.observe(this, Observer {
             databinding.richEditor.setSubscript()
         })
-        addViewModel.superScript.observe(this, Observer {
+        editViewModel.superScript.observe(this, Observer {
             databinding.richEditor.setSuperscript()
         })
-        addViewModel.strikethrough.observe(this, Observer {
+        editViewModel.strikethrough.observe(this, Observer {
             databinding.richEditor.setStrikeThrough()
         })
-        addViewModel.underline.observe(this, Observer {
+        editViewModel.underline.observe(this, Observer {
             databinding.richEditor.setUnderline()
         })
-        addViewModel.heading1.observe(this, Observer {
+        editViewModel.heading1.observe(this, Observer {
             databinding.richEditor.setHeading(1)
         })
-        addViewModel.heading2.observe(this, Observer {
+        editViewModel.heading2.observe(this, Observer {
             databinding.richEditor.setHeading(2)
         })
-        addViewModel.heading3.observe(this, Observer {
+        editViewModel.heading3.observe(this, Observer {
             databinding.richEditor.setHeading(3)
         })
-        addViewModel.heading4.observe(this, Observer {
+        editViewModel.heading4.observe(this, Observer {
             databinding.richEditor.setHeading(4)
         })
-        addViewModel.heading5.observe(this, Observer {
+        editViewModel.heading5.observe(this, Observer {
             databinding.richEditor.setHeading(5)
         })
-        addViewModel.heading6.observe(this, Observer {
+        editViewModel.heading6.observe(this, Observer {
             databinding.richEditor.setHeading(6)
         })
-        addViewModel.textColor.observe(this, Observer {
+        editViewModel.textColor.observe(this, Observer {
             if(it!!)databinding.richEditor.setTextColor(Color.BLACK)
             if(!it)databinding.richEditor.setTextColor(Color.RED)
         })
-        addViewModel.bgColor.observe(this, Observer {
+        editViewModel.bgColor.observe(this, Observer {
             if(it!!)databinding.richEditor.setTextBackgroundColor(Color.TRANSPARENT)
             if(!it)databinding.richEditor.setTextBackgroundColor(Color.YELLOW)
         })
-        addViewModel.indent.observe(this, Observer {
+        editViewModel.indent.observe(this, Observer {
             databinding.richEditor.setIndent()
         })
-        addViewModel.outdent.observe(this, Observer {
+        editViewModel.outdent.observe(this, Observer {
             databinding.richEditor.setOutdent()
         })
-        addViewModel.alignLeft.observe(this, Observer {
+        editViewModel.alignLeft.observe(this, Observer {
             databinding.richEditor.setAlignLeft()
         })
-        addViewModel.alignCenter.observe(this, Observer {
+        editViewModel.alignCenter.observe(this, Observer {
             databinding.richEditor.setAlignCenter()
         })
-        addViewModel.alignRight.observe(this, Observer {
+        editViewModel.alignRight.observe(this, Observer {
             databinding.richEditor.setAlignRight()
         })
-        addViewModel.insertBullets.observe(this, Observer {
+        editViewModel.insertBullets.observe(this, Observer {
             databinding.richEditor.setBullets()
         })
-        addViewModel.insertNumbers.observe(this, Observer {
+        editViewModel.insertNumbers.observe(this, Observer {
             databinding.richEditor.setNumbers()
         })
-        addViewModel.blockQuote.observe(this, Observer {
+        editViewModel.blockQuote.observe(this, Observer {
             databinding.richEditor.setBlockquote()
         })
-        addViewModel.insertImage.observe(this, Observer {
+        editViewModel.insertImage.observe(this, Observer {
             databinding.richEditor.insertImage("http://www.test.co.jp", "aaa")
         })
-        addViewModel.insertLink.observe(this, Observer {
+        editViewModel.insertLink.observe(this, Observer {
             databinding.richEditor.insertLink("http://www.test.co.jp", "aaa")
         })
-        addViewModel.insertCheckBox.observe(this, Observer {
+        editViewModel.insertCheckBox.observe(this, Observer {
             databinding.richEditor.insertTodo()
         })
     }

@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.norinori6791.cycledo.databinding.ActivityMainBinding
-import com.google.norinori6791.cycledo.ui.add.AddViewModel
+import com.google.norinori6791.cycledo.ui.edit.EditViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var mainViewModel: MainViewModel
-    lateinit var addViewModel: AddViewModel
+    lateinit var addViewModel: EditViewModel
     lateinit var databinging: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        addViewModel = ViewModelProviders.of(this).get(AddViewModel::class.java)
+        addViewModel = ViewModelProviders.of(this).get(EditViewModel::class.java)
 
         databinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(databinging.includeMain.toolbar)

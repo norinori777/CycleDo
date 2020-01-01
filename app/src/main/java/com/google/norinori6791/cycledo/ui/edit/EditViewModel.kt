@@ -1,4 +1,4 @@
-package com.google.norinori6791.cycledo.ui.add
+package com.google.norinori6791.cycledo.ui.edit
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -8,7 +8,7 @@ import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.model.repository.TaskItem
 
 
-class AddViewModel : ViewModel() {
+class EditViewModel : ViewModel() {
 
     var title = ObservableField<String>("")
     var content: String = ""
