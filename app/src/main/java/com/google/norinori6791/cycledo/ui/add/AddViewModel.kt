@@ -4,11 +4,14 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.model.repository.TaskItem
+
 
 class AddViewModel : ViewModel() {
 
     var title = ObservableField<String>("")
-    var content = ""
+    var content: String = ""
     var undo = MutableLiveData<Boolean>()
     var redo = MutableLiveData<Boolean>()
     var bold = MutableLiveData<Boolean>()
@@ -38,9 +41,16 @@ class AddViewModel : ViewModel() {
     var insertCheckBox = MutableLiveData<Boolean>()
 
     var showEditMenu = ObservableBoolean(false)
+    var onCompleteAddTask = MutableLiveData<Boolean>()
 
     fun changeEditMenu(hasFocus: Boolean){
         showEditMenu.set(hasFocus)
+    }
+    fun addTask(){
+        val taskItem = TaskItem()
+        val task:Task = Task("", title.get(), content, "", "", null)
+        taskItem.insertTask(task)
+        onCompleteAddTask.postValue(true)
     }
 
     fun updateContent(text: String){

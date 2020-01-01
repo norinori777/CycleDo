@@ -2,9 +2,9 @@ package com.google.norinori6791.cycledo.ui.add
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,6 +16,8 @@ class AddFragment : Fragment() {
 
     private lateinit var addViewModel: AddViewModel
     lateinit var databinding: FragmentAddBinding
+    private var toolbar: Toolbar? = null
+    private var addView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +27,46 @@ class AddFragment : Fragment() {
         addViewModel =
             ViewModelProviders.of(this).get(AddViewModel::class.java)
 
+        richEditorMenuObserve()
+        taskCrudObserve()
+
+        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add, container, false)
+        databinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))
+
+        databinding.viewModel = addViewModel
+
+        return databinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        databinding.unbind()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.fragment_add, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_add -> addViewModel.addTask()
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    fun taskCrudObserve(){
+        addViewModel.onCompleteAddTask.observe(this, Observer {
+            Toast.makeText(activity, "登録しました。", Toast.LENGTH_LONG).show()
+        })
+    }
+
+    fun richEditorMenuObserve(){
         addViewModel.undo.observe(this, Observer {
             databinding.richEditor.undo()
         })
@@ -108,17 +150,5 @@ class AddFragment : Fragment() {
         addViewModel.insertCheckBox.observe(this, Observer {
             databinding.richEditor.insertTodo()
         })
-
-        databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add, container, false)
-        databinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))
-
-        databinding.viewModel = addViewModel
-
-        return databinding.root
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        databinding.unbind()
     }
 }

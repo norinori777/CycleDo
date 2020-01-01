@@ -13,5 +13,4 @@ class InitializeApplication: Application() {
             .name("CycleDo.realm").deleteRealmIfMigrationNeeded()
         Realm.setDefaultConfiguration(builder.build())
     }
-
 }
