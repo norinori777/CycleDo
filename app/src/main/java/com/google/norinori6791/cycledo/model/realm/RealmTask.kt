@@ -5,12 +5,12 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
-open class Task: RealmObject(){
+open class RealmTask: RealmObject(){
     @PrimaryKey
-    open var uniqueId : String = UUID.randomUUID().toString()
+    open var uniqueId : String? = UUID.randomUUID().toString()
     open var title: String? = ""
     open var content: String? = ""
-    open var addDate: String = ""
-    open var modifyDate: String = ""
-    open var tags: RealmList<Tag> =  RealmList()
+    open var addDate: String? = ""
+    open var modifyDate: String? = ""
+    open var tags: RealmList<RealmTag>? =  RealmList()
 }

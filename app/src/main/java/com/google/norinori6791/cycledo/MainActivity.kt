@@ -1,24 +1,21 @@
 package com.google.norinori6791.cycledo
 
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import android.view.Menu
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.google.norinori6791.cycledo.databinding.ActivityMainBinding
+import com.google.norinori6791.cycledo.ui.add.AddViewModel
 
 class MainActivity : AppCompatActivity() {
-    lateinit var viewModel: MainViewModel
+    lateinit var mainViewModel: MainViewModel
+    lateinit var addViewModel: AddViewModel
     lateinit var databinging: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     
@@ -26,19 +23,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        addViewModel = ViewModelProviders.of(this).get(AddViewModel::class.java)
 
         databinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        setSupportActionBar(databinging.includeMain.toolbar)
+        databinging.includeMain.fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -46,16 +39,10 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_list, R.id.nav_add, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send
-            ), drawerLayout
+            ), databinging.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
+        databinging.navView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
