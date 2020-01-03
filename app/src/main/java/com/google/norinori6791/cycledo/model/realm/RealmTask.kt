@@ -8,8 +8,11 @@ import java.util.*
 open class RealmTask: RealmObject(){
     @PrimaryKey
     open var uniqueId : String? = UUID.randomUUID().toString()
+    open var deleted: Int = 0
     open var title: String? = ""
     open var content: String? = ""
+    open var status: Int = 0
+    open var startDate: String? = ""
     open var addDate: String? = ""
     open var modifyDate: String? = ""
     open var tags: RealmList<RealmTag>? =  RealmList()

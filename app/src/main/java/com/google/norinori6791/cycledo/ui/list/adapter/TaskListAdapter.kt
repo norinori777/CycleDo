@@ -23,4 +23,9 @@ class TaskListAdapter(context: Context?, private val items: MutableList<Task>) :
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int){
         holder.databinding.item = items[position]
     }
+
+    fun removeAt(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

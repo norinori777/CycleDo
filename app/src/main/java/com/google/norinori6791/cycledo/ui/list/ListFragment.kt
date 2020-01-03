@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentListBinding
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.ui.list.adapter.TaskListAdapter
+import com.google.norinori6791.cycledo.ui.list.swipe.SwipeToDeleteCallback
 
 
 class ListFragment : Fragment() {
@@ -53,5 +56,21 @@ class ListFragment : Fragment() {
         databinding.listRecyclerview.adapter = taskListAdapter
         val decorator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
         databinding.listRecyclerview.addItemDecoration(decorator)
+
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = databinding.listRecyclerview.adapter as TaskListAdapter
+                viewHolder?.let {
+
+                    when(direction) {
+                        4 -> listViewModel.deleteTask(taskList[it.adapterPosition])
+                        8 -> listViewModel.completeTask(taskList[it.adapterPosition])
+                    }
+                    adapter.removeAt(it.adapterPosition)
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(databinding.listRecyclerview)
     }
 }

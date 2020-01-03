@@ -48,7 +48,7 @@ class EditViewModel : ViewModel() {
     }
     fun addTask(){
         val taskItem = TaskItem()
-        val task:Task = Task("", title.get(), content, "", "", null)
+        val task:Task = Task("", 0, title.get(), content, 0, null, null, null)
         taskItem.insertTask(task)
         onCompleteAddTask.postValue(true)
     }
