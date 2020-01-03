@@ -6,8 +6,10 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 
@@ -60,6 +62,7 @@ class EditFragment : Fragment() {
     fun taskCrudObserve(){
         editViewModel.onCompleteAddTask.observe(this, Observer {
             Toast.makeText(activity, "登録しました。", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_nav_edit_to_nav_list)
         })
     }
 
