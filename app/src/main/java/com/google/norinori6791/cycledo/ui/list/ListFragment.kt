@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,12 @@ class ListFragment : Fragment() {
         listViewModel =
             ViewModelProviders.of(this).get(ListViewModel::class.java)
 
+        listViewModel.toEdit.observe(this, Observer {
+            val bundle = Bundle()
+            bundle.putSerializable("item", it)
+            findNavController().navigate(R.id.action_nav_list_to_nav_edit, bundle)
+        })
+
         databinding = DataBindingUtil.inflate(inflater,R.layout.fragment_list, container, false)
 
         return databinding.root
@@ -51,7 +59,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setListView(taskList: MutableList<Task>){
-        val taskListAdapter = TaskListAdapter(context, taskList)
+        val taskListAdapter = TaskListAdapter(context, taskList, listViewModel)
         databinding.listRecyclerview.layoutManager = LinearLayoutManager(context)
         databinding.listRecyclerview.adapter = taskListAdapter
         val decorator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)

@@ -12,6 +12,10 @@
         <action
             android:id="@+id/action_nav_list_to_nav_edit"
             app:destination="@id/nav_edit" />
+        <argument
+            android:name="item"
+            app:argType="com.google.norinori6791.cycledo.model.data.Task"
+            app:nullable="true" />
     </fragment>
 
     <fragment

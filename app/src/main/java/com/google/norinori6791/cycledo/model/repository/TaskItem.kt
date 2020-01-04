@@ -23,6 +23,14 @@ class TaskItem {
         }
     }
 
+    fun updateTask(task: Task?){
+        realm.executeTransaction {
+            val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId",task?.uniqueId).findFirst()
+            updateTask?.title = task?.title
+            updateTask?.content = task?.content
+        }
+    }
+
     fun logicalDeleteTask(task: Task){
         realm.executeTransaction {
             val deleteTask = it.where(RealmTask::class.java).equalTo("uniqueId",task.uniqueId).findFirst()

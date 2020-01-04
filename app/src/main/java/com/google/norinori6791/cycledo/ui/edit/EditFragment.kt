@@ -6,12 +6,12 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
+import com.google.norinori6791.cycledo.model.data.Task
 
 class EditFragment : Fragment() {
 
@@ -30,6 +30,13 @@ class EditFragment : Fragment() {
         taskCrudObserve()
 
         databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
+
+        var task = arguments?.getSerializable("item") as Task?
+        task?.let {
+            editViewModel.setInitialize(it)
+            databinding.richEditor.html = it.content
+        }
+
         databinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))
 
         databinding.viewModel = editViewModel
@@ -53,7 +60,7 @@ class EditFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_add -> editViewModel.addTask()
+            R.id.action_add -> editViewModel.updateTask()
             else -> super.onOptionsItemSelected(item)
         }
         return true

@@ -17,6 +17,7 @@ class ListViewModel : ViewModel() {
     var taskItems = MutableLiveData<MutableList<Task>>()
     var onCompleteDelete = MutableLiveData<Boolean>()
     var onCompleteUpdate = MutableLiveData<Boolean>()
+    var toEdit = MutableLiveData<Task>()
 
     fun getAllTask() = taskItems.postValue(realmResultToTaskList(repository.getAllTasks()))
 
