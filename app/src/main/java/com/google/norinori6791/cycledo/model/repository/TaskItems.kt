@@ -5,7 +5,10 @@ import io.realm.Realm
 import io.realm.RealmResults
 
 class TaskItems {
-    val realm = Realm.getDefaultInstance()
+    private val realm = Realm.getDefaultInstance()
 
-    fun getAllTasks(): RealmResults<RealmTask> = realm.where(RealmTask::class.java).findAll()
+    fun getAllTasks(): RealmResults<RealmTask> {
+        val deleted = 0
+        return realm.where(RealmTask::class.java).equalTo("deleted", deleted).findAll()
+    }
 }

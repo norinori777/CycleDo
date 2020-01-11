@@ -10,8 +10,9 @@ import com.google.norinori6791.cycledo.model.repository.TaskItem
 
 class EditViewModel : ViewModel() {
 
+    var task: Task? = null
     var title = ObservableField<String>("")
-    var content: String = ""
+    var content: String? = ""
     var undo = MutableLiveData<Boolean>()
     var redo = MutableLiveData<Boolean>()
     var bold = MutableLiveData<Boolean>()
@@ -46,10 +47,17 @@ class EditViewModel : ViewModel() {
     fun changeEditMenu(hasFocus: Boolean){
         showEditMenu.set(hasFocus)
     }
-    fun addTask(){
+    fun updateTask(){
         val taskItem = TaskItem()
-        val task:Task = Task("", title.get(), content, "", "", null)
-        taskItem.insertTask(task)
+        if(task == null) {
+            val insertTask = Task("", 0, title.get(), content, 0, null, null, null)
+            taskItem.insertTask(insertTask)
+        } else {
+            val updateTask = task
+            updateTask?.title = title.get()
+            updateTask?.content = content
+            taskItem.updateTask(updateTask)
+        }
         onCompleteAddTask.postValue(true)
     }
 
@@ -172,6 +180,12 @@ class EditViewModel : ViewModel() {
 
     fun clickInsertCheckbox(){
         insertCheckBox.postValue(true)
+    }
+
+    fun setInitialize(initialTask: Task){
+        task = initialTask
+        title.set(initialTask.title)
+        content = initialTask.content
     }
 
 }
