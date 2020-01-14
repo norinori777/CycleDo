@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="oneDayTask">#FFFFFF</color>
+    <color name="fourDayTask">#FFFFC7</color>
+    <color name="sevenDayTask">#E5FFC2</color>
+    <color name="elevenDayTask">#C1FFB5</color>
+    <color name="fifteenDayTask">#AAFFBB</color>
+    <color name="twentyDayTask">#96FFCE</color>
 </resources>

@@ -9,10 +9,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp">
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp">
 
         <TextView
             android:id="@+id/list_title_textview"
