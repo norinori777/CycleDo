@@ -1,9 +1,7 @@
 package com.google.norinori6791.cycledo.model.data
 
-import android.os.Looper.loop
-import com.google.norinori6791.cycledo.model.data.Tag
+import android.text.Spanned
 import com.google.norinori6791.cycledo.model.enum.CycleTerm
-import com.google.norinori6791.cycledo.util.NowDate
 import io.realm.annotations.PrimaryKey
 import java.io.Serializable
 import java.text.SimpleDateFormat
@@ -15,6 +13,7 @@ data class Task(
     open var deleted: Int = 0,
     open var title: String? = "",
     open var content: String? = "",
+    open var html: Spanned? = null,
     open var status: Int = 0,
     open var startDate: String? = "",
     open var addDate: String? = "",

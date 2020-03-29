@@ -28,7 +28,7 @@ class ListViewModel : ViewModel() {
             it.tags?.forEach{
                 tags.add(Tag(it.name))
             }
-            var task = Task(it.uniqueId, it.deleted, it.title, it.content, it.status, it.startDate, it.addDate, it.modifyDate, tags)
+            var task = Task(it.uniqueId, it.deleted, it.title, it.content, null, it.status, it.startDate, it.addDate, it.modifyDate, tags)
             tasks.add(task)
         }
         return tasks

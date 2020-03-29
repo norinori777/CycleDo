@@ -1,10 +1,11 @@
 package com.google.norinori6791.cycledo.ui.list.adapter
 
 import android.content.Context
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.norinori6791.cycledo.R
@@ -19,7 +20,7 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val databinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
-        databinding.listTitleTextview.setOnClickListener(ItemClickListener(databinding))
+        databinding.listItemLayout.setOnClickListener(ItemClickListener(databinding))
         return TaskViewHolder(databinding)
     }
 
@@ -30,6 +31,10 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
 
         resId?.let {
             holder.databinding.listTryNum.setBackgroundResource(it)
+        }
+
+        items[position].content?.let {
+            items[position].html = convertHtml(items[position].content!!, HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
         holder.databinding.item = items[position]
     }
@@ -43,5 +48,8 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
         override fun onClick(view: View) {
             viewModel.toEdit.postValue(databinding.item)
         }
+    }
+    private fun convertHtml(html: String, fromHtmlModeCompact: Int): Spanned {
+        return HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 }

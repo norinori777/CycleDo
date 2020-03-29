@@ -6,6 +6,7 @@
         <variable
             name="item"
             type="com.google.norinori6791.cycledo.model.data.Task" />
+        <variable name="viewModel" type="com.google.norinori6791.cycledo.ui.list.ListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,6 +61,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:paddingLeft="4dp"
+            android:textColor="@color/colorPrimary"
             android:text="@{item.title}"
             android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@+id/list_try_num"
@@ -67,15 +69,16 @@
             tools:text="タイトル" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/list_content_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:lines="3"
             android:maxLines="3"
-            android:text="@{item.content}"
+            android:text="@{item.html}"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
