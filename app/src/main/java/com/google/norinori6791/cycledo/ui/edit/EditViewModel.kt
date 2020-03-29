@@ -50,7 +50,7 @@ class EditViewModel : ViewModel() {
     fun updateTask(){
         val taskItem = TaskItem()
         if(task == null) {
-            val insertTask = Task("", 0, title.get(), content, 0, null, null, null)
+            val insertTask = Task("", 0, title.get(), content, null, 0, null, null, null)
             taskItem.insertTask(insertTask)
         } else {
             val updateTask = task

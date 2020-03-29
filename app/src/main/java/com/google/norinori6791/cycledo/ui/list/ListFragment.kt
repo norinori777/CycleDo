@@ -59,7 +59,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setListView(taskList: MutableList<Task>){
-        val taskListAdapter = TaskListAdapter(context, taskList, listViewModel)
+        val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel)
         databinding.listRecyclerview.layoutManager = LinearLayoutManager(context)
         databinding.listRecyclerview.adapter = taskListAdapter
         val decorator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
