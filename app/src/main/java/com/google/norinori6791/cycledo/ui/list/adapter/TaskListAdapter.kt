@@ -16,12 +16,12 @@ import com.google.norinori6791.cycledo.ui.list.ListViewModel
 class TaskListAdapter(private val context: Context?, private val packageName: String?, private val items: MutableList<Task>, val viewModel: ListViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
-    val resource = context?.resources
+    private val resource = context?.resources
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val databinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
-        databinding.listItemLayout.setOnLongClickListener(ItemClickListener(databinding))
-        return TaskViewHolder(databinding)
+        val dataBinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
+        dataBinding.listItemLayout.setOnLongClickListener(ItemClickListener(dataBinding))
+        return TaskViewHolder(dataBinding)
     }
 
     override fun getItemCount(): Int = items.size
