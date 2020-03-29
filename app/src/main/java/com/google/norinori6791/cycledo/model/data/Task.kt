@@ -24,7 +24,7 @@ data class Task(
     fun getTaskTermColor(): String{
         val sdFormat = SimpleDateFormat("yyyy/MM/dd/ hh:mm:ss")
         val now = Calendar.getInstance()
-        var color = "oneDayTask"
+        var color = "title_try_number_1"
 
         run loop@ {
             CycleTerm.values().forEach {

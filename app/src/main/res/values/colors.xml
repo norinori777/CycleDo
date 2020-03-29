@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="oneDayTask">#FFFFFF</color>
-    <color name="fourDayTask">#FFFFC7</color>
-    <color name="sevenDayTask">#E5FFC2</color>
-    <color name="elevenDayTask">#C1FFB5</color>
-    <color name="fifteenDayTask">#AAFFBB</color>
-    <color name="twentyDayTask">#96FFCE</color>
+    <color name="colorPrimary">#38CFBF</color>
+    <color name="colorPrimaryDark">#2EBAA6</color>
+    <color name="colorAccent">#DFCD31</color>
+    <color name="oneDayTask">#8ADEF3</color>
+    <color name="fourDayTask">#55C5D1</color>
+    <color name="sevenDayTask">#4699C3</color>
+    <color name="elevenDayTask">#FFD579</color>
+    <color name="fifteenDayTask">#F79C65</color>
+    <color name="twentyDayTask">#FC8479</color>
 </resources>

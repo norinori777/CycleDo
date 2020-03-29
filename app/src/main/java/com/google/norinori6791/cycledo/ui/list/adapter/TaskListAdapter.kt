@@ -26,9 +26,10 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int){
-        var resId = resource?.getIdentifier(items[position].getTaskTermColor(), "color", packageName)
+        var resId = resource?.getIdentifier(items[position].getTaskTermColor(), "drawable", packageName)
+
         resId?.let {
-            holder.databinding.listItemLayout.setBackgroundColor(it)
+            holder.databinding.listTryNum.setBackgroundResource(it)
         }
         holder.databinding.item = items[position]
     }

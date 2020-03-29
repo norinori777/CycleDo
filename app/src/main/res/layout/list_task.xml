@@ -15,16 +15,71 @@
         android:paddingTop="3dp"
         android:paddingBottom="3dp">
 
-        <TextView
-            android:id="@+id/list_title_textview"
-            android:layout_width="match_parent"
+        <com.google.norinori6791.cycledo.util.EqualWidthHeightTextView
+            android:id="@+id/list_try_num"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:paddingLeft="4dp"
-            android:text="@{item.title}"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/title_try_number_1"
+            android:gravity="center"
+            android:inputType="number"
+            android:padding="4dp"
+            android:text="@{Integer.toString(item.status)}"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/list_add_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/add_article_date"
+            app:layout_constraintStart_toEndOf="@+id/list_try_num"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/list_add_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{item.addDate}"
+            app:layout_constraintStart_toEndOf="@+id/list_add_date_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="YYYY/MM/DD" />
+
+        <TextView
+            android:id="@+id/list_title_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="4dp"
+            android:text="@{item.title}"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/list_try_num"
+            app:layout_constraintTop_toBottomOf="@+id/list_add_date_title"
             tools:text="タイトル" />
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:lines="3"
+            android:maxLines="3"
+            android:text="@{item.content}"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/list_try_num"
+            app:layout_constraintTop_toBottomOf="@+id/list_title_textview" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
