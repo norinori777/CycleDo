@@ -20,7 +20,8 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val dataBinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
-        dataBinding.listItemLayout.setOnLongClickListener(ItemClickListener(dataBinding))
+        dataBinding.listItemLayout.setOnLongClickListener(ItemLongClickListener(dataBinding))
+        dataBinding.listItemLayout.setOnClickListener(ItemClickListener(dataBinding))
         return TaskViewHolder(dataBinding)
     }
 
@@ -44,10 +45,15 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
         notifyItemRemoved(position)
     }
 
-    private inner class ItemClickListener(val databinding: ListTaskBinding): View.OnLongClickListener {
+    private inner class ItemLongClickListener(val dataBinding: ListTaskBinding): View.OnLongClickListener {
         override fun onLongClick(view: View): Boolean {
-            viewModel.toEdit.postValue(databinding.item)
+            viewModel.toEdit.postValue(dataBinding.item)
             return true
+        }
+    }
+    private inner class ItemClickListener(val dataBinding: ListTaskBinding): View.OnClickListener {
+        override fun onClick(view: View){
+            viewModel.toShow.postValue(dataBinding.item)
         }
     }
     private fun convertHtml(html: String, fromHtmlModeCompact: Int): Spanned {

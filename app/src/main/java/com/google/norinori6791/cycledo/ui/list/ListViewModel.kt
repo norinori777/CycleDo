@@ -1,5 +1,6 @@
 package com.google.norinori6791.cycledo.ui.list
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.norinori6791.cycledo.model.data.Tag
@@ -17,7 +18,9 @@ class ListViewModel : ViewModel() {
     var taskItems = MutableLiveData<MutableList<Task>>()
     var onCompleteDelete = MutableLiveData<Boolean>()
     var onCompleteUpdate = MutableLiveData<Boolean>()
-    var toEdit = MutableLiveData<Task>()
+    var isShowDetail = ObservableBoolean(false)
+    var toEdit= MutableLiveData<Task>()
+    var toShow= MutableLiveData<Task>()
 
     fun getAllTask() = taskItems.postValue(realmResultToTaskList(repository.getAllTasks()))
 
