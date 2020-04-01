@@ -2,6 +2,9 @@
 <layout>
     <data>
         <variable
+            name="viewModel"
+            type="com.google.norinori6791.cycledo.ui.list.ListViewModel" />
+        <variable
             name="item"
             type="com.google.norinori6791.cycledo.model.data.Task" />
     </data>
@@ -9,6 +12,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:onClickListener="@{()->viewModel.closeArticleDetail()}"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

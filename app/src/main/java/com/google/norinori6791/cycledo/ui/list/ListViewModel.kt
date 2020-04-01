@@ -21,6 +21,7 @@ class ListViewModel : ViewModel() {
     var isShowDetail = ObservableBoolean(false)
     var toEdit= MutableLiveData<Task>()
     var toShow= MutableLiveData<Task>()
+    var toList = MutableLiveData<Boolean>()
 
     fun getAllTask() = taskItems.postValue(realmResultToTaskList(repository.getAllTasks()))
 
@@ -50,5 +51,10 @@ class ListViewModel : ViewModel() {
             }
         }
         onCompleteUpdate.postValue(true)
+    }
+
+    fun closeArticleDetail(){
+        toList.postValue(true)
+
     }
 }

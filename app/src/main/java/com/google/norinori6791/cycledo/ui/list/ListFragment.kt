@@ -6,6 +6,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,7 +32,8 @@ class ListFragment : Fragment() {
     private lateinit var listViewModel: ListViewModel
     private lateinit var dataBinding: FragmentListBinding
     private lateinit var showDetailDataBinding: ArticleDetailBinding
-    private lateinit var materialTransform: MaterialContainerTransform
+    private lateinit var detailTransform: MaterialContainerTransform
+    private lateinit var listTransform: MaterialContainerTransform
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,22 +50,38 @@ class ListFragment : Fragment() {
         })
 
         listViewModel.toShow.observe(this, Observer {
-            TransitionManager.beginDelayedTransition(dataBinding.root as ViewGroup, materialTransform)
+            TransitionManager.beginDelayedTransition(dataBinding.root as ViewGroup, detailTransform)
 //            listViewModel.isShowDetail.set(true)
+            dataBinding.listArticleDetailCardView.removeAllViews()
             dataBinding.listArticleDetailCardView.visibility = View.VISIBLE
             showDetailDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.article_detail, dataBinding.listArticleDetailCardView, true)
             showDetailDataBinding.item = it
+            showDetailDataBinding.viewModel = listViewModel
+        })
+
+        listViewModel.toList.observe(this, Observer {
+            TransitionManager.beginDelayedTransition(showDetailDataBinding.root as ViewGroup, listTransform)
+            dataBinding.listArticleDetailCardView.visibility = View.GONE
         })
 
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_list, container, false)
 
-        materialTransform  = MaterialContainerTransform(context!!).apply {
+        detailTransform  = MaterialContainerTransform(context!!).apply {
             startView = dataBinding.listRecyclerview
             endView = dataBinding.listArticleDetailCardView
             pathMotion = MaterialArcMotion()
-            duration = 2000
+            duration = 500
             scrimColor = Color.TRANSPARENT
         }
+
+        listTransform  = MaterialContainerTransform(context!!).apply {
+            startView = dataBinding.listArticleDetailCardView
+            endView =  dataBinding.listRecyclerview
+            pathMotion = MaterialArcMotion()
+            duration = 500
+            scrimColor = Color.TRANSPARENT
+        }
+
 
         return dataBinding.root
     }

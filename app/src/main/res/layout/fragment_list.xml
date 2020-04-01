@@ -20,8 +20,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/list_article_detail_card_view"
-        android:layout_width="332dp"
-        android:layout_height="643dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:visibility="@{viewModel.isShowDetail ? View.VISIBLE : View.GONE}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
