@@ -29,8 +29,8 @@ class ListViewModel : ViewModel() {
         var tasks:MutableList<Task> = mutableListOf()
         realmResults.forEach{
             var tags: MutableList<Tag> = mutableListOf()
-            it.tags?.forEach{
-                tags.add(Tag(it.name))
+            it.tags?.forEach{ tag ->
+                tags.add(Tag(tag.name))
             }
             var task = Task(it.uniqueId, it.deleted, it.title, it.content, null, it.status, it.startDate, it.addDate, it.modifyDate, tags)
             tasks.add(task)
@@ -44,10 +44,10 @@ class ListViewModel : ViewModel() {
     }
 
     fun completeTask(task: Task){
-        CycleTerm.values().forEach {
-            if(it.term > task.status){
-                repositoryTask.updateStatusTask(it.term, task)
-                return@forEach
+        for(cycleTerm in CycleTerm.values()){
+            if(cycleTerm.term > task.status){
+                repositoryTask.updateStatusTask(cycleTerm.term, task)
+                break
             }
         }
         onCompleteUpdate.postValue(true)

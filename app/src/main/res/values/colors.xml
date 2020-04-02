@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#38CFBF</color>
     <color name="colorPrimaryDark">#2EBAA6</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorAccent">#DFCD31</color>
     <color name="oneDayTask">#8ADEF3</color>
     <color name="fourDayTask">#55C5D1</color>
