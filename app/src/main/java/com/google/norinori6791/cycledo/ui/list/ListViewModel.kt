@@ -1,5 +1,6 @@
 package com.google.norinori6791.cycledo.ui.list
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.norinori6791.cycledo.model.data.Tag
@@ -17,7 +18,10 @@ class ListViewModel : ViewModel() {
     var taskItems = MutableLiveData<MutableList<Task>>()
     var onCompleteDelete = MutableLiveData<Boolean>()
     var onCompleteUpdate = MutableLiveData<Boolean>()
-    var toEdit = MutableLiveData<Task>()
+    var isShowDetail = ObservableBoolean(false)
+    var toEdit= MutableLiveData<Task>()
+    var toShow= MutableLiveData<Task>()
+    var toList = MutableLiveData<Boolean>()
 
     fun getAllTask() = taskItems.postValue(realmResultToTaskList(repository.getAllTasks()))
 
@@ -25,8 +29,8 @@ class ListViewModel : ViewModel() {
         var tasks:MutableList<Task> = mutableListOf()
         realmResults.forEach{
             var tags: MutableList<Tag> = mutableListOf()
-            it.tags?.forEach{
-                tags.add(Tag(it.name))
+            it.tags?.forEach{ tag ->
+                tags.add(Tag(tag.name))
             }
             var task = Task(it.uniqueId, it.deleted, it.title, it.content, null, it.status, it.startDate, it.addDate, it.modifyDate, tags)
             tasks.add(task)
@@ -40,12 +44,17 @@ class ListViewModel : ViewModel() {
     }
 
     fun completeTask(task: Task){
-        CycleTerm.values().forEach {
-            if(it.term > task.status){
-                repositoryTask.updateStatusTask(it.term, task)
-                return@forEach
+        for(cycleTerm in CycleTerm.values()){
+            if(cycleTerm.term > task.status){
+                repositoryTask.updateStatusTask(cycleTerm.term, task)
+                break
             }
         }
         onCompleteUpdate.postValue(true)
+    }
+
+    fun closeArticleDetail(){
+        toList.postValue(true)
+
     }
 }

@@ -16,12 +16,13 @@ import com.google.norinori6791.cycledo.ui.list.ListViewModel
 class TaskListAdapter(private val context: Context?, private val packageName: String?, private val items: MutableList<Task>, val viewModel: ListViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
-    val resource = context?.resources
+    private val resource = context?.resources
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val databinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
-        databinding.listItemLayout.setOnClickListener(ItemClickListener(databinding))
-        return TaskViewHolder(databinding)
+        val dataBinding: ListTaskBinding = DataBindingUtil.inflate(inflater, R.layout.list_task, parent, false)
+        dataBinding.listItemLayout.setOnLongClickListener(ItemLongClickListener(dataBinding))
+        dataBinding.listItemLayout.setOnClickListener(ItemClickListener(dataBinding))
+        return TaskViewHolder(dataBinding)
     }
 
     override fun getItemCount(): Int = items.size
@@ -44,9 +45,15 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
         notifyItemRemoved(position)
     }
 
-    private inner class ItemClickListener(val databinding: ListTaskBinding): View.OnClickListener {
-        override fun onClick(view: View) {
-            viewModel.toEdit.postValue(databinding.item)
+    private inner class ItemLongClickListener(val dataBinding: ListTaskBinding): View.OnLongClickListener {
+        override fun onLongClick(view: View): Boolean {
+            viewModel.toEdit.postValue(dataBinding.item)
+            return true
+        }
+    }
+    private inner class ItemClickListener(val dataBinding: ListTaskBinding): View.OnClickListener {
+        override fun onClick(view: View){
+            viewModel.toShow.postValue(dataBinding.item)
         }
     }
     private fun convertHtml(html: String, fromHtmlModeCompact: Int): Spanned {
