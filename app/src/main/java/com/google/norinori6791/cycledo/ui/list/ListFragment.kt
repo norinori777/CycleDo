@@ -3,9 +3,7 @@ package com.google.norinori6791.cycledo.ui.list
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -88,6 +86,7 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
 
         listViewModel.taskItems.observe(this, Observer {
            setListView(it)
@@ -97,6 +96,19 @@ class ListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         listViewModel.getAllTask()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater?.inflate(R.menu.fragment_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_select_display_condition -> listViewModel
+            R.id.action_settings -> listViewModel
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     private fun setListView(taskList: MutableList<Task>){
