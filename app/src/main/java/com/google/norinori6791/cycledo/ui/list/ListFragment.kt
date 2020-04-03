@@ -53,7 +53,9 @@ class ListFragment : Fragment() {
             dataBinding.listArticleDetailCardView.removeAllViews()
             dataBinding.listArticleDetailCardView.visibility = View.VISIBLE
             showDetailDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.article_detail, dataBinding.listArticleDetailCardView, true)
+
             showDetailDataBinding.item = it
+            showDetailDataBinding.articleDetailTryNum.setBackgroundResource(context?.resources?.getIdentifier(it.getTaskTermColor(), "drawable", activity?.packageName)!!)
             showDetailDataBinding.viewModel = listViewModel
         })
 
