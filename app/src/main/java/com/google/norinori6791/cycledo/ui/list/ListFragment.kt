@@ -19,6 +19,7 @@ import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.ArticleDetailBinding
 import com.google.norinori6791.cycledo.databinding.FragmentListBinding
 import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.ui.list.adapter.ItemView
 import com.google.norinori6791.cycledo.ui.list.adapter.TaskListAdapter
 import com.google.norinori6791.cycledo.ui.list.swipe.SwipeToDeleteCallback
 
@@ -30,6 +31,7 @@ class ListFragment : Fragment() {
     private lateinit var showDetailDataBinding: ArticleDetailBinding
     private lateinit var detailTransform: MaterialContainerTransform
     private lateinit var listTransform: MaterialContainerTransform
+    var itemView = ItemView()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +48,14 @@ class ListFragment : Fragment() {
         })
 
         listViewModel.toShow.observe(this, Observer {
+            detailTransform  = MaterialContainerTransform(context!!).apply {
+                startView = itemView?.getItemView()
+                endView = dataBinding.listArticleDetailCardView
+                pathMotion = MaterialArcMotion()
+                duration = 500
+                scrimColor = Color.TRANSPARENT
+            }
+
             TransitionManager.beginDelayedTransition(dataBinding.root as ViewGroup, detailTransform)
 //            listViewModel.isShowDetail.set(true)
             dataBinding.listArticleDetailCardView.removeAllViews()
@@ -58,28 +68,19 @@ class ListFragment : Fragment() {
         })
 
         listViewModel.toList.observe(this, Observer {
+            listTransform  = MaterialContainerTransform(context!!).apply {
+                startView = dataBinding.listArticleDetailCardView
+                endView =  itemView?.getItemView()
+                pathMotion = MaterialArcMotion()
+                duration = 500
+                scrimColor = Color.TRANSPARENT
+            }
+
             TransitionManager.beginDelayedTransition(showDetailDataBinding.root as ViewGroup, listTransform)
             dataBinding.listArticleDetailCardView.visibility = View.GONE
         })
 
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_list, container, false)
-
-        detailTransform  = MaterialContainerTransform(context!!).apply {
-            startView = dataBinding.listRecyclerview
-            endView = dataBinding.listArticleDetailCardView
-            pathMotion = MaterialArcMotion()
-            duration = 500
-            scrimColor = Color.TRANSPARENT
-        }
-
-        listTransform  = MaterialContainerTransform(context!!).apply {
-            startView = dataBinding.listArticleDetailCardView
-            endView =  dataBinding.listRecyclerview
-            pathMotion = MaterialArcMotion()
-            duration = 500
-            scrimColor = Color.TRANSPARENT
-        }
-
 
         return dataBinding.root
     }
@@ -112,7 +113,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setListView(taskList: MutableList<Task>){
-        val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel)
+        val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel, itemView)
         dataBinding.listRecyclerview.layoutManager = LinearLayoutManager(context)
         dataBinding.listRecyclerview.adapter = taskListAdapter
         val decorator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
