@@ -55,6 +55,9 @@ class ListViewModel : ViewModel() {
 
     fun closeArticleDetail(){
         toList.postValue(true)
+    }
+
+    fun changeListCondition(condition: String){
 
     }
 }

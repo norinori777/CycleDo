@@ -6,6 +6,7 @@ import android.transition.TransitionManager
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,9 @@ import com.google.norinori6791.cycledo.databinding.ArticleDetailBinding
 import com.google.norinori6791.cycledo.databinding.FragmentListBinding
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.ui.list.adapter.ItemView
+import com.google.norinori6791.cycledo.ui.list.adapter.ListConditionAdapter
 import com.google.norinori6791.cycledo.ui.list.adapter.TaskListAdapter
+import com.google.norinori6791.cycledo.ui.list.dialog.ListConditionDialogFragment
 import com.google.norinori6791.cycledo.ui.list.swipe.SwipeToDeleteCallback
 
 
@@ -31,6 +34,7 @@ class ListFragment : Fragment() {
     private lateinit var showDetailDataBinding: ArticleDetailBinding
     private lateinit var detailTransform: MaterialContainerTransform
     private lateinit var listTransform: MaterialContainerTransform
+    private lateinit var conditionDialog: ListConditionDialogFragment
     var itemView = ItemView()
 
     override fun onCreateView(
@@ -89,6 +93,8 @@ class ListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
 
+        setDialog()
+
         listViewModel.taskItems.observe(this, Observer {
            setListView(it)
         })
@@ -105,7 +111,7 @@ class ListFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_select_display_condition -> listViewModel
+            R.id.action_select_display_condition -> conditionDialog.show(fragmentManager!!, "condition_dialog")
             R.id.action_settings -> listViewModel
             else -> super.onOptionsItemSelected(item)
         }
@@ -134,5 +140,9 @@ class ListFragment : Fragment() {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(dataBinding.listRecyclerview)
+    }
+
+    private fun setDialog(){
+        conditionDialog = ListConditionDialogFragment(listViewModel, context!!)
     }
 }

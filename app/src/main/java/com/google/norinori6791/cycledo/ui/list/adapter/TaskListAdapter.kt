@@ -31,13 +31,13 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
         var resId = resource?.getIdentifier(items[position].getTaskTermColor(), "drawable", packageName)
 
         resId?.let {
-            holder.databinding.listTryNum.setBackgroundResource(it)
+            holder.dataBinding.listTryNum.setBackgroundResource(it)
         }
 
         items[position].content?.let {
             items[position].html = convertHtml(items[position].content!!, HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
-        holder.databinding.item = items[position]
+        holder.dataBinding.item = items[position]
     }
 
     fun removeAt(position: Int) {
