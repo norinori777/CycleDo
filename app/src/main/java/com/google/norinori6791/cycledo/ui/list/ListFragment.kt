@@ -61,7 +61,6 @@ class ListFragment : Fragment() {
             }
 
             TransitionManager.beginDelayedTransition(dataBinding.root as ViewGroup, detailTransform)
-//            listViewModel.isShowDetail.set(true)
             dataBinding.listArticleDetailCardView.removeAllViews()
             dataBinding.listArticleDetailCardView.visibility = View.VISIBLE
             showDetailDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.article_detail, dataBinding.listArticleDetailCardView, true)
@@ -102,7 +101,8 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listViewModel.getAllTask()
+        listViewModel.
+        getAllTask()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
