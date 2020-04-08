@@ -13,7 +13,7 @@ import com.google.norinori6791.cycledo.databinding.ListTaskBinding
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.ui.list.ListViewModel
 
-class TaskListAdapter(private val context: Context?, private val packageName: String?, private val items: MutableList<Task>, val viewModel: ListViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
+class TaskListAdapter(private val context: Context?, private val packageName: String?, private val items: MutableList<Task>, val viewModel: ListViewModel, var itemView: ItemView?) : RecyclerView.Adapter<TaskViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
     private val resource = context?.resources
@@ -31,13 +31,13 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
         var resId = resource?.getIdentifier(items[position].getTaskTermColor(), "drawable", packageName)
 
         resId?.let {
-            holder.databinding.listTryNum.setBackgroundResource(it)
+            holder.dataBinding.listTryNum.setBackgroundResource(it)
         }
 
         items[position].content?.let {
             items[position].html = convertHtml(items[position].content!!, HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
-        holder.databinding.item = items[position]
+        holder.dataBinding.item = items[position]
     }
 
     fun removeAt(position: Int) {
@@ -53,6 +53,7 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
     }
     private inner class ItemClickListener(val dataBinding: ListTaskBinding): View.OnClickListener {
         override fun onClick(view: View){
+            itemView?.setItemView(view)
             viewModel.toShow.postValue(dataBinding.item)
         }
     }

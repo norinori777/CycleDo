@@ -8,7 +8,6 @@ class TaskItems {
     private val realm = Realm.getDefaultInstance()
 
     fun getAllTasks(): RealmResults<RealmTask> {
-        val deleted = 0
-        return realm.where(RealmTask::class.java).equalTo("deleted", deleted).findAll()
+        return realm.where(RealmTask::class.java).findAll()
     }
 }

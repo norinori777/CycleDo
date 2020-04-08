@@ -3,11 +3,10 @@ package com.google.norinori6791.cycledo.ui.list
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -21,7 +20,10 @@ import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.ArticleDetailBinding
 import com.google.norinori6791.cycledo.databinding.FragmentListBinding
 import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.ui.list.adapter.ItemView
+import com.google.norinori6791.cycledo.ui.list.adapter.ListConditionAdapter
 import com.google.norinori6791.cycledo.ui.list.adapter.TaskListAdapter
+import com.google.norinori6791.cycledo.ui.list.dialog.ListConditionDialogFragment
 import com.google.norinori6791.cycledo.ui.list.swipe.SwipeToDeleteCallback
 
 
@@ -32,6 +34,9 @@ class ListFragment : Fragment() {
     private lateinit var showDetailDataBinding: ArticleDetailBinding
     private lateinit var detailTransform: MaterialContainerTransform
     private lateinit var listTransform: MaterialContainerTransform
+    private lateinit var conditionDialog: ListConditionDialogFragment
+    var itemView = ItemView()
+    var nowTaskList: MutableList<Task> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,8 +53,15 @@ class ListFragment : Fragment() {
         })
 
         listViewModel.toShow.observe(this, Observer {
+            detailTransform  = MaterialContainerTransform(context!!).apply {
+                startView = itemView?.getItemView()
+                endView = dataBinding.listArticleDetailCardView
+                pathMotion = MaterialArcMotion()
+                duration = 500
+                scrimColor = Color.TRANSPARENT
+            }
+
             TransitionManager.beginDelayedTransition(dataBinding.root as ViewGroup, detailTransform)
-//            listViewModel.isShowDetail.set(true)
             dataBinding.listArticleDetailCardView.removeAllViews()
             dataBinding.listArticleDetailCardView.visibility = View.VISIBLE
             showDetailDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.article_detail, dataBinding.listArticleDetailCardView, true)
@@ -60,47 +72,59 @@ class ListFragment : Fragment() {
         })
 
         listViewModel.toList.observe(this, Observer {
+            listTransform  = MaterialContainerTransform(context!!).apply {
+                startView = dataBinding.listArticleDetailCardView
+                endView =  itemView?.getItemView()
+                pathMotion = MaterialArcMotion()
+                duration = 500
+                scrimColor = Color.TRANSPARENT
+            }
+
             TransitionManager.beginDelayedTransition(showDetailDataBinding.root as ViewGroup, listTransform)
             dataBinding.listArticleDetailCardView.visibility = View.GONE
         })
 
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_list, container, false)
 
-        detailTransform  = MaterialContainerTransform(context!!).apply {
-            startView = dataBinding.listRecyclerview
-            endView = dataBinding.listArticleDetailCardView
-            pathMotion = MaterialArcMotion()
-            duration = 500
-            scrimColor = Color.TRANSPARENT
-        }
-
-        listTransform  = MaterialContainerTransform(context!!).apply {
-            startView = dataBinding.listArticleDetailCardView
-            endView =  dataBinding.listRecyclerview
-            pathMotion = MaterialArcMotion()
-            duration = 500
-            scrimColor = Color.TRANSPARENT
-        }
-
-
         return dataBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+
+        setDialog()
 
         listViewModel.taskItems.observe(this, Observer {
            setListView(it)
+        })
+
+        listViewModel.onChangeFilter.observe(this, Observer {
+            conditionDialog.dismiss()
         })
     }
 
     override fun onResume() {
         super.onResume()
-        listViewModel.getAllTask()
+        listViewModel.getTask()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater?.inflate(R.menu.fragment_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_select_display_condition -> conditionDialog.show(fragmentManager!!, "condition_dialog")
+            R.id.action_settings -> listViewModel
+            else -> super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     private fun setListView(taskList: MutableList<Task>){
-        val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel)
+        nowTaskList = taskList
+        val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel, itemView)
         dataBinding.listRecyclerview.layoutManager = LinearLayoutManager(context)
         dataBinding.listRecyclerview.adapter = taskListAdapter
         val decorator = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
@@ -110,10 +134,9 @@ class ListFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = dataBinding.listRecyclerview.adapter as TaskListAdapter
                 viewHolder?.let {
-
                     when(direction) {
-                        4 -> listViewModel.deleteTask(taskList[it.adapterPosition])
-                        8 -> listViewModel.completeTask(taskList[it.adapterPosition])
+                        4 -> listViewModel.deleteTask(nowTaskList[it.adapterPosition])
+                        8 -> listViewModel.completeTask(nowTaskList[it.adapterPosition])
                     }
                     adapter.removeAt(it.adapterPosition)
                 }
@@ -121,5 +144,9 @@ class ListFragment : Fragment() {
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(dataBinding.listRecyclerview)
+    }
+
+    private fun setDialog(){
+        conditionDialog = ListConditionDialogFragment(listViewModel, context!!)
     }
 }
