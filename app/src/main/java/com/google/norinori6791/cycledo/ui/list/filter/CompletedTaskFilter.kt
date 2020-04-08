@@ -5,7 +5,7 @@ import com.google.norinori6791.cycledo.model.enum.CycleTerm
 
 class CompletedTaskFilter: TaskFilter {
     override fun isMatches(task: Task): Boolean {
-        if(task.status == CycleTerm.FINISH.term) return true
+        if(task.status == CycleTerm.FINISH.term && task.deleted == 0) return true
         return false
     }
 }

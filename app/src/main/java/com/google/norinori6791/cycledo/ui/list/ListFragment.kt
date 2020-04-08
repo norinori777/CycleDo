@@ -36,6 +36,7 @@ class ListFragment : Fragment() {
     private lateinit var listTransform: MaterialContainerTransform
     private lateinit var conditionDialog: ListConditionDialogFragment
     var itemView = ItemView()
+    var nowTaskList: MutableList<Task> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,12 +98,15 @@ class ListFragment : Fragment() {
         listViewModel.taskItems.observe(this, Observer {
            setListView(it)
         })
+
+        listViewModel.onChangeFilter.observe(this, Observer {
+            conditionDialog.dismiss()
+        })
     }
 
     override fun onResume() {
         super.onResume()
-        listViewModel.
-        getAllTask()
+        listViewModel.getTask()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -119,6 +123,7 @@ class ListFragment : Fragment() {
     }
 
     private fun setListView(taskList: MutableList<Task>){
+        nowTaskList = taskList
         val taskListAdapter = TaskListAdapter(context, activity?.packageName, taskList, listViewModel, itemView)
         dataBinding.listRecyclerview.layoutManager = LinearLayoutManager(context)
         dataBinding.listRecyclerview.adapter = taskListAdapter
@@ -129,10 +134,9 @@ class ListFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = dataBinding.listRecyclerview.adapter as TaskListAdapter
                 viewHolder?.let {
-
                     when(direction) {
-                        4 -> listViewModel.deleteTask(taskList[it.adapterPosition])
-                        8 -> listViewModel.completeTask(taskList[it.adapterPosition])
+                        4 -> listViewModel.deleteTask(nowTaskList[it.adapterPosition])
+                        8 -> listViewModel.completeTask(nowTaskList[it.adapterPosition])
                     }
                     adapter.removeAt(it.adapterPosition)
                 }
