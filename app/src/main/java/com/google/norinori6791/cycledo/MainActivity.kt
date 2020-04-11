@@ -9,14 +9,16 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.google.norinori6791.cycledo.databinding.ActivityMainBinding
+import com.google.norinori6791.cycledo.ui.edit.EditFragment
 import com.google.norinori6791.cycledo.ui.edit.EditViewModel
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mainViewModel: MainViewModel
-    lateinit var addViewModel: EditViewModel
-    lateinit var databinging: ActivityMainBinding
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var addViewModel: EditViewModel
+    private lateinit var dataBinging: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     
     
@@ -26,10 +28,11 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         addViewModel = ViewModelProviders.of(this).get(EditViewModel::class.java)
 
-        databinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setSupportActionBar(databinging.includeMain.toolbar)
-        databinging.includeMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+        dataBinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(dataBinging.includeMain.toolbar)
+        dataBinging.includeMain.fab.setOnClickListener { view ->
+            val navController = findNavController(R.id.nav_host_fragment)
+            navController.navigate(R.id.nav_edit)
         }
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -39,10 +42,10 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_list, R.id.nav_edit, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send
-            ), databinging.drawerLayout
+            ), dataBinging.drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        databinging.navView.setupWithNavController(navController)
+        dataBinging.navView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

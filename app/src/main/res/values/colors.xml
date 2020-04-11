@@ -3,12 +3,11 @@
     <color name="colorPrimary">#38CFBF</color>
     <color name="colorPrimaryDark">#2EBAA6</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorAccent">#DFCD31</color>
+    <color name="colorAccent">#EAFFEB3B</color>
     <color name="oneDayTask">#8ADEF3</color>
     <color name="fourDayTask">#55C5D1</color>
     <color name="sevenDayTask">#4699C3</color>
     <color name="elevenDayTask">#FFD579</color>
     <color name="fifteenDayTask">#F79C65</color>
     <color name="twentyDayTask">#FC8479</color>
-    <color name="finish">#A8B807</color>
 </resources>
