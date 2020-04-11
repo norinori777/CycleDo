@@ -24,18 +24,20 @@ class MainActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         addViewModel = ViewModelProviders.of(this).get(EditViewModel::class.java)
 
         dataBinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val navController = findNavController(R.id.nav_host_fragment)
+
+
         setSupportActionBar(dataBinging.includeMain.toolbar)
         dataBinging.includeMain.fab.setOnClickListener { view ->
-            val navController = findNavController(R.id.nav_host_fragment)
             navController.navigate(R.id.nav_edit)
         }
 
-        val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(

@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,9 +25,18 @@ class EditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Toolbar設定
+        activity?.let { fragmentActivity ->
+            var appCompatActivity = fragmentActivity as AppCompatActivity
+            val toolbar = fragmentActivity.findViewById<Toolbar>(R.id.toolbar)
+            appCompatActivity.setSupportActionBar(toolbar)
+            appCompatActivity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
+            appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true);
+            appCompatActivity.supportActionBar?.setHomeButtonEnabled(true);
+        }
+
         editViewModel =
             ViewModelProviders.of(this).get(EditViewModel::class.java)
-
         richEditorMenuObserve()
         taskCrudObserve()
 
@@ -38,7 +49,6 @@ class EditFragment : Fragment() {
         }
 
         dataBinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))
-
         dataBinding.viewModel = editViewModel
 
         return dataBinding.root
@@ -55,11 +65,12 @@ class EditFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.fragment_add, menu)
+        inflater?.inflate(R.menu.fragment_edit, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            android.R.id.home -> findNavController().navigate(R.id.action_nav_edit_to_nav_list)
             R.id.action_add -> editViewModel.updateTask()
             else -> super.onOptionsItemSelected(item)
         }
