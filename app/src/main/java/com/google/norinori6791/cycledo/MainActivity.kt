@@ -31,10 +31,8 @@ class MainActivity : AppCompatActivity() {
         dataBinging = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(dataBinging.includeMain.toolbar)
         dataBinging.includeMain.fab.setOnClickListener { view ->
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.nav_host_fragment, EditFragment())
-            fragmentTransaction.commit()
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+            val navController = findNavController(R.id.nav_host_fragment)
+            navController.navigate(R.id.nav_edit)
         }
 
         val navController = findNavController(R.id.nav_host_fragment)
