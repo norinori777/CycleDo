@@ -4,7 +4,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionManager
 import android.view.*
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -114,7 +116,9 @@ class ListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val mDrawer = activity?.findViewById<DrawerLayout>(R.id.drawer_layout)
         when(item.itemId) {
+            android.R.id.home -> mDrawer?.openDrawer(GravityCompat.START)
             R.id.action_select_display_condition -> conditionDialog.show(fragmentManager!!, "condition_dialog")
             R.id.action_settings -> listViewModel
             else -> super.onOptionsItemSelected(item)
