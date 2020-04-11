@@ -306,11 +306,14 @@
         <jp.wasabeef.richeditor.RichEditor
             android:id="@+id/rich_editor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:onTextChangeListener="@{(text)->viewModel.updateContent(text)}"
+            android:layout_marginEnd="8dp"
             android:onFocusChangeListener="@{( v, hasFocus) -> viewModel.changeEditMenu(hasFocus)}"
+            android:onTextChangeListener="@{(text)->viewModel.updateContent(text)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontal_scroll_view" />
 
