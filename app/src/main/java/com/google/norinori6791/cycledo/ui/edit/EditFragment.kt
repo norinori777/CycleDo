@@ -3,7 +3,6 @@ package com.google.norinori6791.cycledo.ui.edit
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.util.toast.InfoToast
 
 class EditFragment : Fragment() {
 
@@ -79,7 +79,7 @@ class EditFragment : Fragment() {
 
     fun taskCrudObserve(){
         editViewModel.onCompleteAddTask.observe(this, Observer {
-            Toast.makeText(activity, "登録しました。", Toast.LENGTH_LONG).show()
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.edit_add_complete))
             findNavController().navigate(R.id.action_nav_edit_to_nav_list)
         })
     }

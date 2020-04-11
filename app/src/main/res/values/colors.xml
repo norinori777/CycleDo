@@ -10,4 +10,7 @@
     <color name="elevenDayTask">#FFD579</color>
     <color name="fifteenDayTask">#F79C65</color>
     <color name="twentyDayTask">#FC8479</color>
+    <color name="colorSuccess">#3DB39E</color>
+    <color name="colorAlert">#E2574C</color>
+    <color name="colorInfo">#2EA9D3</color>
 </resources>
