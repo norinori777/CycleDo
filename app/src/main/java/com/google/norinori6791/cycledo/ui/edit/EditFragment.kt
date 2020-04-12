@@ -19,6 +19,7 @@ class EditFragment : Fragment() {
 
     private lateinit var editViewModel: EditViewModel
     private lateinit var dataBinding: FragmentEditBinding
+    private lateinit var task: Task
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +43,7 @@ class EditFragment : Fragment() {
 
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
 
-        var task = arguments?.getSerializable("item") as Task?
+        task = arguments?.getSerializable("item") as Task
         task?.let {
             editViewModel.setInitialize(it)
             dataBinding.richEditor.html = it.content
@@ -72,6 +73,8 @@ class EditFragment : Fragment() {
         when(item.itemId) {
             android.R.id.home -> findNavController().navigate(R.id.action_nav_edit_to_nav_list)
             R.id.action_add -> editViewModel.updateTask()
+            R.id.action_cycle_reset -> editViewModel.resetCycle(task)
+            R.id.action_cycle_reset_all -> editViewModel.resetCycleAll(task)
             else -> super.onOptionsItemSelected(item)
         }
         return true
@@ -80,6 +83,16 @@ class EditFragment : Fragment() {
     fun taskCrudObserve(){
         editViewModel.onCompleteAddTask.observe(this, Observer {
             InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.edit_add_complete))
+            findNavController().navigate(R.id.action_nav_edit_to_nav_list)
+        })
+
+        editViewModel.onResetCycleAll.observe(this, Observer {
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.edit_reset_cycle_all))
+            findNavController().navigate(R.id.action_nav_edit_to_nav_list)
+        })
+
+        editViewModel.onResetCycle.observe(this, Observer {
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.edit_reset_cycle))
             findNavController().navigate(R.id.action_nav_edit_to_nav_list)
         })
     }

@@ -44,4 +44,22 @@ class TaskItem {
             updateTask?.status = nextStatus
         }
     }
+
+    fun updateResetCycleAll(task: Task){
+        realm.executeTransaction{
+            val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId", task.uniqueId).findFirst()
+            updateTask?.status = 0
+            updateTask?.startDate = nowDate.get()
+            updateTask?.modifyDate = nowDate.get()
+        }
+    }
+
+    fun updateResetCycle(task: Task){
+        realm.executeTransaction{
+            val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId", task.uniqueId).findFirst()
+            updateTask?.status = task.status
+            updateTask?.startDate = task.startDate
+            updateTask?.modifyDate = nowDate.get()
+        }
+    }
 }
