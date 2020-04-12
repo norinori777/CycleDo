@@ -5,7 +5,12 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="edit_menu_cycle_reset">サイクルを１つ戻す</string>
+    <string name="edit_menu_cycle_reset_all">初めからやり直す</string>
+
+    <string name="action_settings">設定</string>
+
 
     <string name="menu_list">リスト</string>
     <string name="menu_add">登録</string>
@@ -22,4 +27,6 @@
     <string name="list_menu_condition">表示切替</string>
     <string name="list_menu_add">登録</string>
     <string name="edit_add_complete">登録しました</string>
+    <string name="edit_reset_cycle">１つ前に戻しました</string>
+    <string name="edit_reset_cycle_all">初めからに更新しました</string>
 </resources>

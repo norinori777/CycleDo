@@ -28,17 +28,6 @@ data class Task(
         run loop@ {
             CycleTerm.values().forEach {
                 if(status == it.term) return it.backGroundColor
-//                var beforeDate = Calendar.getInstance()
-//                beforeDate.time = sdFormat.parse(startDate)
-//                beforeDate.add(Calendar.DATE, it.term)
-//                var afterDate = Calendar.getInstance()
-//                afterDate.time = sdFormat.parse(startDate)
-//                afterDate.add(Calendar.DATE, it.term + 1)
-//                if(beforeDate.compareTo(now) < 0 &&
-//                        afterDate.compareTo(now) > 0){
-//                    color = it.backGroundColor
-//                    return@loop
-//                }
             }
         }
         return color

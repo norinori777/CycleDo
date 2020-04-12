@@ -5,7 +5,10 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.model.enum.CycleTerm
 import com.google.norinori6791.cycledo.model.repository.TaskItem
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EditViewModel : ViewModel() {
@@ -43,6 +46,37 @@ class EditViewModel : ViewModel() {
 
     var showEditMenu = ObservableBoolean(false)
     var onCompleteAddTask = MutableLiveData<Boolean>()
+    var onResetCycleAll = MutableLiveData<Boolean>()
+    var onResetCycle = MutableLiveData<Boolean>()
+
+    fun resetCycle(task: Task){
+        var term = 0
+        var preTerm = 0
+        for(cycleTerm in CycleTerm.values()){
+            if(cycleTerm.term < task.status){
+                preTerm = cycleTerm.term
+                term = task.status - cycleTerm.term
+            }
+        }
+
+        val sdFormat = SimpleDateFormat("yyyy/MM/dd/ hh:mm:ss")
+        var taskDate = Calendar.getInstance()
+        taskDate.time = sdFormat.parse(task.startDate)
+        taskDate.add(Calendar.DATE, term)
+
+        task.status = preTerm
+        task.startDate = sdFormat.format(taskDate.time)
+
+        val taskItem = TaskItem()
+        taskItem.updateResetCycle(task)
+        onResetCycle.postValue(true)
+    }
+
+    fun resetCycleAll(task: Task){
+        val taskItem = TaskItem()
+        taskItem.updateResetCycleAll(task)
+        onResetCycleAll.postValue(true)
+    }
 
     fun changeEditMenu(hasFocus: Boolean){
         showEditMenu.set(hasFocus)
