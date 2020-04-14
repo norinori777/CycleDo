@@ -38,6 +38,7 @@ class TaskListAdapter(private val context: Context?, private val packageName: St
             items[position].html = convertHtml(items[position].content!!, HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
         holder.dataBinding.item = items[position]
+        holder.dataBinding.cycleTerm = items[position].getTermDisplay()
     }
 
     fun removeAt(position: Int) {
