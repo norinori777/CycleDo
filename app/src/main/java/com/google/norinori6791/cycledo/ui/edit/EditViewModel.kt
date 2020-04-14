@@ -57,6 +57,9 @@ class EditViewModel : ViewModel() {
                 preTerm = cycleTerm.term
                 term = task.status - cycleTerm.term
             }
+            if(term > CycleTerm.TWENTY.term){
+                term = CycleTerm.TWENTY.term
+            }
         }
 
         val sdFormat = SimpleDateFormat("yyyy/MM/dd/ hh:mm:ss")

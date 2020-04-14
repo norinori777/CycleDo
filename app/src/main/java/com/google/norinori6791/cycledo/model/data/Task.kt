@@ -32,4 +32,13 @@ data class Task(
         }
         return color
     }
+    fun getTermDisplay(): String {
+        var display = ""
+        run loop@ {
+            CycleTerm.values().forEach {
+                if(status == it.term) display = it.display
+            }
+        }
+        return display
+    }
 }

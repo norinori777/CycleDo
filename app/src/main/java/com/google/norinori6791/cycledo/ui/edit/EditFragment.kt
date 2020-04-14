@@ -43,10 +43,12 @@ class EditFragment : Fragment() {
 
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
 
-        task = arguments?.getSerializable("item") as Task
-        task?.let {
-            editViewModel.setInitialize(it)
-            dataBinding.richEditor.html = it.content
+        arguments?.let {arguments ->
+            task = arguments.getSerializable("item") as Task
+            task?.let {
+                editViewModel.setInitialize(it)
+                dataBinding.richEditor.html = it.content
+            }
         }
 
         dataBinding.richEditor.setPlaceholder(getString(R.string.add_edit_text_placeholder))

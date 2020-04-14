@@ -6,6 +6,9 @@
         <variable
             name="item"
             type="com.google.norinori6791.cycledo.model.data.Task" />
+        <variable
+            name="cycleTerm"
+            type="String" />
         <variable name="viewModel" type="com.google.norinori6791.cycledo.ui.list.ListViewModel" />
     </data>
 
@@ -27,7 +30,7 @@
             android:gravity="center"
             android:inputType="number"
             android:padding="4dp"
-            android:text="@{Integer.toString(item.status)}"
+            android:text="@{cycleTerm}"
             android:textColor="@color/colorWhite"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
