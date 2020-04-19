@@ -7,7 +7,7 @@ import com.google.norinori6791.cycledo.util.NowDate
 import io.realm.Realm
 
 class TaskItem {
-    val realm = Realm.getDefaultInstance()
+    val realm: Realm = Realm.getDefaultInstance()
     private val nowDate = NowDate()
 
     fun insertTask(task: Task){

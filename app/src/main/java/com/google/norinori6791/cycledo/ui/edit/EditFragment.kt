@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 import com.google.norinori6791.cycledo.model.data.Task
+import com.google.norinori6791.cycledo.ui.edit.dialog.SelectTagDialogFragment
 import com.google.norinori6791.cycledo.util.toast.InfoToast
 
 class EditFragment : Fragment() {
@@ -20,6 +21,7 @@ class EditFragment : Fragment() {
     private lateinit var editViewModel: EditViewModel
     private lateinit var dataBinding: FragmentEditBinding
     private lateinit var task: Task
+    private lateinit var selectTagDialog: SelectTagDialogFragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +62,15 @@ class EditFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
+
+        editViewModel.onSelectTag.observe(this, Observer{
+            when(it){
+                true -> selectTagDialog.show(fragmentManager!!, "select_tag_dialog")
+                false -> selectTagDialog.dismiss()
+            }
+        })
+
+        setDialog()
     }
 
     override fun onDestroy() {
@@ -82,7 +93,7 @@ class EditFragment : Fragment() {
         return true
     }
 
-    fun taskCrudObserve(){
+    private fun taskCrudObserve(){
         editViewModel.onCompleteAddTask.observe(this, Observer {
             InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.edit_add_complete))
             findNavController().navigate(R.id.action_nav_edit_to_nav_list)
@@ -99,7 +110,7 @@ class EditFragment : Fragment() {
         })
     }
 
-    fun richEditorMenuObserve(){
+    private fun richEditorMenuObserve(){
         editViewModel.undo.observe(this, Observer {
             dataBinding.richEditor.undo()
         })
@@ -183,5 +194,9 @@ class EditFragment : Fragment() {
         editViewModel.insertCheckBox.observe(this, Observer {
             dataBinding.richEditor.insertTodo()
         })
+    }
+
+    private fun setDialog(){
+        selectTagDialog = SelectTagDialogFragment(context!!, editViewModel)
     }
 }
