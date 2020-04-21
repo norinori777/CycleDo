@@ -34,6 +34,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:hint="@string/select_tag_message_hint"
         android:text="@={viewModel.inputTag}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
