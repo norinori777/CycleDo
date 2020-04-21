@@ -29,4 +29,9 @@
     <string name="edit_add_complete">登録しました</string>
     <string name="edit_reset_cycle">１つ前に戻しました</string>
     <string name="edit_reset_cycle_all">初めからに更新しました</string>
+
+    <string name="select_tag_message">ラベルを指定</string>
+    <string name="select_tag_message_hint">ラベル追加(複数追加は、空白区切り）</string>
+    <string name="select_tag_do">登録</string>
+    <string name="select_tag_cancel">キャンセル</string>
 </resources>

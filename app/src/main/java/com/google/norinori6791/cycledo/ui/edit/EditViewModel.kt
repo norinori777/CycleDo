@@ -4,14 +4,21 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.norinori6791.cycledo.model.data.Tag
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.model.enum.CycleTerm
+import com.google.norinori6791.cycledo.model.realm.RealmTag
+import com.google.norinori6791.cycledo.model.repository.TagItem
+import com.google.norinori6791.cycledo.model.repository.TagItems
 import com.google.norinori6791.cycledo.model.repository.TaskItem
+import io.realm.RealmResults
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class EditViewModel : ViewModel() {
+
+    private val repository = TagItems()
 
     var task: Task? = null
     var title = ObservableField<String>("")
@@ -45,9 +52,78 @@ class EditViewModel : ViewModel() {
     var insertCheckBox = MutableLiveData<Boolean>()
 
     var showEditMenu = ObservableBoolean(false)
+    var inputTag = ObservableField<String>("")
     var onCompleteAddTask = MutableLiveData<Boolean>()
     var onResetCycleAll = MutableLiveData<Boolean>()
     var onResetCycle = MutableLiveData<Boolean>()
+    var onSelectTag = MutableLiveData<Boolean>()
+    var isSelectedTags = ObservableBoolean(false)
+    var selectedTag: MutableList<Tag> = mutableListOf()
+    var allTags: MutableList<Tag> = getTags()
+    var initialAllTag: MutableList<Tag> = allTags
+
+    fun startSelectTag(){
+        onSelectTag.postValue(true)
+    }
+
+    private fun getTags(): MutableList<Tag>{
+        return realmResultToTagList(repository.getAllTags())
+    }
+
+    private fun realmResultToTagList(realmResults: RealmResults<RealmTag>): MutableList<Tag>{
+        var tags: MutableList<Tag> = mutableListOf()
+        realmResults.forEach {
+            var tag = Tag(it.uniqueId, it.deleted, it.name)
+            tags.add(tag)
+        }
+        return tags
+    }
+
+    fun updateSelectedTag(tag: Tag){
+        if(selectedTag.contains(tag)){
+            selectedTag.remove(tag)
+            if(selectedTag.size == 0) isSelectedTags.set(false)
+        } else {
+            selectedTag.add(tag)
+            if(selectedTag.size > 0) isSelectedTags.set(true)
+        }
+    }
+    fun getUpdateTag(){
+        inputTag.get()?.let {
+            if(it.isNotEmpty()){
+                val tmp = inputTag.get()?.split(" ", "　")
+                tmp?.forEach {
+                    if(isNotTagExist(it)){
+                        allTags.add(0, Tag(null, 0, it))
+                    }
+                    if(isNotSelectedTagExist(it)){
+                        selectedTag.add(Tag(null, 0, it))
+                        inputTag.set("")
+                    }
+                }
+                if(selectedTag.size > 0) isSelectedTags.set(true)
+            }
+            onSelectTag.postValue(false)
+        }
+    }
+
+    private fun isNotTagExist(tag:String): Boolean{
+        allTags?.forEach{
+            if(it.name == tag) return false
+        }
+        return true
+    }
+
+    private fun isNotSelectedTagExist(tag:String): Boolean {
+        selectedTag?.forEach {
+            if(it.name == tag) return false
+        }
+        return true
+    }
+
+    fun endSelectTag(){
+        onSelectTag.postValue(false)
+    }
 
     fun resetCycle(task: Task){
         var term = 0
@@ -84,15 +160,26 @@ class EditViewModel : ViewModel() {
     fun changeEditMenu(hasFocus: Boolean){
         showEditMenu.set(hasFocus)
     }
+
+    private fun isAddTag(tag: Tag): Boolean{
+        if(initialAllTag.contains(tag)) return false
+        return true
+    }
+
     fun updateTask(){
         val taskItem = TaskItem()
+        val tagItem = TagItem()
+        selectedTag?.forEach{
+            if(isAddTag(it)) tagItem.insertTag(it)
+        }
         if(task == null) {
-            val insertTask = Task("", 0, title.get(), content, null, 0, null, null, null)
+            val insertTask = Task("", 0, title.get(), content, null, 0, null, null, null, selectedTag)
             taskItem.insertTask(insertTask)
         } else {
             val updateTask = task
             updateTask?.title = title.get()
             updateTask?.content = content
+            updateTask?.tags = selectedTag
             taskItem.updateTask(updateTask)
         }
         onCompleteAddTask.postValue(true)
@@ -223,6 +310,9 @@ class EditViewModel : ViewModel() {
         task = initialTask
         title.set(initialTask.title)
         content = initialTask.content
+        initialTask.tags?.let {
+            if(it.size > 0) isSelectedTags.set(true)
+            selectedTag = it
+        }
     }
-
 }
