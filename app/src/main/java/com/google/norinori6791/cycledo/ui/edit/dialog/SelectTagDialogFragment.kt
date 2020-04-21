@@ -29,6 +29,7 @@ class SelectTagDialogFragment(private val applicationContext: Context, val viewM
         dataBinding.selectTagRecyclerView.adapter = adapter
         dataBinding.selectTagRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         dataBinding.viewModel = viewModel
+
         return dataBinding.root
     }
 

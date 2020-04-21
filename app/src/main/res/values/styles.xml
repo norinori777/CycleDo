@@ -22,4 +22,9 @@
         <item name="android:fontFamily">@font/comic_neue_regular</item>
     </style>
 
+    <style name="TagDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
+    </style>
+
 </resources>

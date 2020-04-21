@@ -6,10 +6,13 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 import com.google.norinori6791.cycledo.model.data.Task
@@ -69,7 +72,6 @@ class EditFragment : Fragment() {
                 false -> selectTagDialog.dismiss()
             }
         })
-
         setDialog()
     }
 
@@ -196,7 +198,8 @@ class EditFragment : Fragment() {
         })
     }
 
-    private fun setDialog(){
+    private fun setDialog() {
         selectTagDialog = SelectTagDialogFragment(context!!, editViewModel)
+        selectTagDialog.setStyle(R.style.TagDialogStyle, DialogFragment.STYLE_NO_TITLE)
     }
 }

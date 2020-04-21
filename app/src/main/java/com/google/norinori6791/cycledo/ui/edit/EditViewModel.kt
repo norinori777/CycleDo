@@ -8,6 +8,7 @@ import com.google.norinori6791.cycledo.model.data.Tag
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.model.enum.CycleTerm
 import com.google.norinori6791.cycledo.model.realm.RealmTag
+import com.google.norinori6791.cycledo.model.repository.TagItem
 import com.google.norinori6791.cycledo.model.repository.TagItems
 import com.google.norinori6791.cycledo.model.repository.TaskItem
 import io.realm.RealmResults
@@ -59,8 +60,7 @@ class EditViewModel : ViewModel() {
     var isSelectedTags = ObservableBoolean(false)
     var selectedTag: MutableList<Tag> = mutableListOf()
     var allTags: MutableList<Tag> = getTags()
-    var addTag: MutableList<Tag> = mutableListOf()
-    var addSelectedTag: MutableList<Tag> = mutableListOf()
+    var initialAllTag: MutableList<Tag> = allTags
 
     fun startSelectTag(){
         onSelectTag.postValue(true)
@@ -82,32 +82,42 @@ class EditViewModel : ViewModel() {
     fun updateSelectedTag(tag: Tag){
         if(selectedTag.contains(tag)){
             selectedTag.remove(tag)
+            if(selectedTag.size == 0) isSelectedTags.set(false)
         } else {
             selectedTag.add(tag)
+            if(selectedTag.size > 0) isSelectedTags.set(true)
         }
     }
     fun getUpdateTag(){
-        val tmp = inputTag.get()?.split(" ", "　")
-        tmp?.forEach {
-            if(isNotTagExist(it)){
-                addTag.add(Tag(null, 0, it))
-                allTags.add(Tag(null, 0, it))
+        inputTag.get()?.let {
+            if(it.isNotEmpty()){
+                val tmp = inputTag.get()?.split(" ", "　")
+                tmp?.forEach {
+                    if(isNotTagExist(it)){
+                        allTags.add(0, Tag(null, 0, it))
+                    }
+                    if(isNotSelectedTagExist(it)){
+                        selectedTag.add(Tag(null, 0, it))
+                        inputTag.set("")
+                    }
+                }
+                if(selectedTag.size > 0) isSelectedTags.set(true)
             }
-            if(isNotSelectedTagExist(it)){
-                addSelectedTag.add(Tag(null, 0, it))
-                selectedTag.add(Tag(null, 0, it))
-            }
+            onSelectTag.postValue(false)
         }
-        onSelectTag.postValue(false)
     }
 
     private fun isNotTagExist(tag:String): Boolean{
-        if(allTags.contains(tag)) return false
+        allTags?.forEach{
+            if(it.name == tag) return false
+        }
         return true
     }
 
     private fun isNotSelectedTagExist(tag:String): Boolean {
-        if(selectedTag.contains(tag)) return false
+        selectedTag?.forEach {
+            if(it.name == tag) return false
+        }
         return true
     }
 
@@ -150,15 +160,26 @@ class EditViewModel : ViewModel() {
     fun changeEditMenu(hasFocus: Boolean){
         showEditMenu.set(hasFocus)
     }
+
+    private fun isAddTag(tag: Tag): Boolean{
+        if(initialAllTag.contains(tag)) return false
+        return true
+    }
+
     fun updateTask(){
         val taskItem = TaskItem()
+        val tagItem = TagItem()
+        selectedTag?.forEach{
+            if(isAddTag(it)) tagItem.insertTag(it)
+        }
         if(task == null) {
-            val insertTask = Task("", 0, title.get(), content, null, 0, null, null, null)
+            val insertTask = Task("", 0, title.get(), content, null, 0, null, null, null, selectedTag)
             taskItem.insertTask(insertTask)
         } else {
             val updateTask = task
             updateTask?.title = title.get()
             updateTask?.content = content
+            updateTask?.tags = selectedTag
             taskItem.updateTask(updateTask)
         }
         onCompleteAddTask.postValue(true)
@@ -289,5 +310,9 @@ class EditViewModel : ViewModel() {
         task = initialTask
         title.set(initialTask.title)
         content = initialTask.content
+        initialTask.tags?.let {
+            if(it.size > 0) isSelectedTags.set(true)
+            selectedTag = it
+        }
     }
 }

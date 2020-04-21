@@ -44,7 +44,7 @@ class ListViewModel : ViewModel() {
         realmResults.forEach{
             var tags: MutableList<Tag> = mutableListOf()
             it.tags?.forEach{ tag ->
-                tags.add(Tag(tag.name))
+                tags.add(Tag(tag.uniqueId, tag.deleted, tag.name))
             }
             var task = Task(it.uniqueId, it.deleted, it.title, it.content, null, it.status, it.startDate, it.addDate, it.modifyDate, tags)
             if(filter.isMatches(task)) tasks.add(task)

@@ -28,7 +28,7 @@ class TagListAdapter(private val context: Context, val viewModel: EditViewModel)
 
     private fun isCheckedTag(tag: Tag, tagList: MutableList<Tag>):Boolean{
         tagList?.forEach {
-            if (tag == it) return true
+            if (tag.name == it.name) return true
         }
         return false
     }

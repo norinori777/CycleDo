@@ -8,19 +8,36 @@
             type="com.google.norinori6791.cycledo.ui.edit.EditViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/select_tag_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <TextView
+        android:id="@+id/select_tag_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/select_tag_message"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/select_tag_editText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@={viewModel.inputTag}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/select_tag_message" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_tag_recyclerView"
@@ -28,26 +45,25 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toTopOf="@+id/select_tag_update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_tag_editText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/select_tag_editText" />
 
     <Button
         android:id="@+id/select_tag_update"
-        android:layout_width="wrap_content"
+        android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button_do"
-        android:textColor="@color/colorWhite"
-        android:text="@string/select_tag_do"
         android:onClickListener="@{()->viewModel.getUpdateTag()}"
+        android:text="@string/select_tag_do"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/select_tag_cancel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_tag_recyclerView" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/select_tag_cancel"
@@ -55,11 +71,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button_cancel"
+        android:onClickListener="@{()->viewModel.endSelectTag()}"
         android:text="@string/select_tag_cancel"
         android:textColor="@color/colorWhite"
-        android:onClickListener="@{()->viewModel.endSelectTag()}"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/select_tag_update"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/select_tag_update" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

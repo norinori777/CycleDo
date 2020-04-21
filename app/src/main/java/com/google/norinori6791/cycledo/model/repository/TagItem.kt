@@ -15,4 +15,11 @@ class TagItem {
             it.copyToRealm(realmTag)
         }
     }
+
+    fun updateTag(tag: Tag){
+        realm.executeTransaction {
+            val updateTag = it.where(RealmTag::class.java).equalTo("uniqueId", tag.uniqueId).findFirst()
+            updateTag?.name = tag.name
+        }
+    }
 }

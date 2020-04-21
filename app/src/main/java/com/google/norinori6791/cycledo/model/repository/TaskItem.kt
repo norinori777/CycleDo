@@ -2,9 +2,11 @@ package com.google.norinori6791.cycledo.model.repository
 
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.model.enum.CycleTerm
+import com.google.norinori6791.cycledo.model.realm.RealmTag
 import com.google.norinori6791.cycledo.model.realm.RealmTask
 import com.google.norinori6791.cycledo.util.NowDate
 import io.realm.Realm
+import java.util.*
 
 class TaskItem {
     val realm: Realm = Realm.getDefaultInstance()
@@ -17,6 +19,12 @@ class TaskItem {
         realmTask.startDate = nowDate.get()
         realmTask.addDate = nowDate.get()
         realmTask.modifyDate = nowDate.get()
+        task.tags?.forEach {
+            var realmTag = RealmTag()
+            realmTag.deleted = it.deleted
+            realmTag.name = it.name
+            realmTask.tags?.add(realmTag)
+        }
 
         realm.executeTransaction {
             it.copyToRealm(realmTask)
@@ -28,6 +36,12 @@ class TaskItem {
             val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId",task?.uniqueId).findFirst()
             updateTask?.title = task?.title
             updateTask?.content = task?.content
+            task?.tags?.forEach { tag ->
+                var realmTag = RealmTag()
+                realmTag.deleted = tag.deleted
+                realmTag.name = tag.name
+                updateTask?.tags?.add(realmTag)
+            }
         }
     }
 
