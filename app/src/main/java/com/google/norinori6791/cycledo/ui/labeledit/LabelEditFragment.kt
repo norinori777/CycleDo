@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentLabelEditBinding
 import com.google.norinori6791.cycledo.model.data.Tag
+import com.google.norinori6791.cycledo.util.toast.InfoToast
 
 class LabelEditFragment : Fragment() {
 
@@ -51,6 +53,15 @@ class LabelEditFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setHasOptionsMenu(true)
+
+        labelEditViewModel.onUpdate.observe(this, Observer {
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.label_edit_update_success))
+            findNavController().navigate(R.id.action_nav_label_edit_to_nav_label)
+        })
+        labelEditViewModel.onDelete.observe(this, Observer {
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.label_edit_delete_success))
+            findNavController().navigate(R.id.action_nav_label_edit_to_nav_label)
+        })
     }
 
     override fun onDestroy() {

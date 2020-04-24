@@ -22,4 +22,11 @@ class TagItem {
             updateTag?.name = tag.name
         }
     }
+
+    fun deleteTag(tag: Tag ){
+        realm.executeTransaction {
+            val deleteTag = it.where(RealmTag::class.java).equalTo("uniqueId", tag.uniqueId).findFirst()
+            deleteTag?.deleteFromRealm()
+        }
+    }
 }

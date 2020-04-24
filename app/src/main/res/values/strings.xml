@@ -41,4 +41,6 @@
     <string name="list_label_edit">ラベル編集</string>
 
     <string name="label_edit_delete">ラベル削除</string>
+    <string name="label_edit_update_success">ラベルを更新しました。</string>
+    <string name="label_edit_delete_success">ラベルを削除しました。</string>
 </resources>
