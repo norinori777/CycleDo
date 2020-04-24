@@ -34,4 +34,8 @@
     <string name="select_tag_message_hint">ラベル追加(複数追加は、空白区切り）</string>
     <string name="select_tag_do">登録</string>
     <string name="select_tag_cancel">キャンセル</string>
+
+    <string name="list_label_now_title">本日：</string>
+    <string name="list_label_all_title">全て：</string>
+    <string name="list_label">ラベル</string>
 </resources>
