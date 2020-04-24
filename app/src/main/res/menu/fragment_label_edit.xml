@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/action_menu"
+        android:visible="true">
+        <item
+            android:id="@+id/action_edit"
+            android:orderInCategory="100"
+            android:title="edit"
+            android:icon="@drawable/ic_done_white_24dp"
+            app:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/action_delete"
+            android:orderInCategory="100"
+            android:title="@string/label_edit_delete"
+            app:showAsAction="ifRoom" />
+    </group>
+
+</menu>

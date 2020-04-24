@@ -38,4 +38,7 @@
     <string name="list_label_now_title">本日：</string>
     <string name="list_label_all_title">全て：</string>
     <string name="list_label">ラベル</string>
+    <string name="list_label_edit">ラベル編集</string>
+
+    <string name="label_edit_delete">ラベル削除</string>
 </resources>

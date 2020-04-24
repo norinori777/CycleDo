@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.norinori6791.cycledo.R
@@ -27,8 +28,15 @@ class LabelFragment : Fragment() {
     ): View? {
         labelViewModel =
             ViewModelProviders.of(this).get(LabelViewModel::class.java)
+        labelViewModel.onLongClickLabel.observe(this, Observer {
+            val bundle = Bundle()
+            bundle.putSerializable("item", it)
+            findNavController().navigate(R.id.action_nav_label_to_nav_label_edit, bundle)
+        })
         labelViewModel.onClickLabel.observe(this, Observer {
-
+            var bundle = Bundle()
+            bundle.putSerializable("item", it)
+            findNavController().navigate(R.id.action_nav_label_to_nav_list, bundle)
         })
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_label, container, false)
 

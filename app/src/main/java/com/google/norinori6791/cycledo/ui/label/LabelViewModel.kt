@@ -15,6 +15,7 @@ class LabelViewModel : ViewModel() {
     private val repository = TagItems()
     private val taskRepository = TaskItems()
     var allTags: MutableList<Tag> = getTags()
+    var onLongClickLabel = MutableLiveData<Tag>()
     var onClickLabel = MutableLiveData<Tag>()
 
     private fun getTags(): MutableList<Tag>{
@@ -34,7 +35,13 @@ class LabelViewModel : ViewModel() {
         return taskRepository.getTaskByTag(tag, filter)
     }
 
-    fun labelClick(tag: Tag){
+    fun labelClick(tag:Tag){
         onClickLabel.postValue(tag)
+    }
+
+    fun labelLongClick(tag: Tag): Boolean{
+        onLongClickLabel.postValue(tag)
+
+        return true
     }
 }
