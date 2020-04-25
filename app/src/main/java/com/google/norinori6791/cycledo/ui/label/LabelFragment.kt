@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentLabelBinding
 import com.google.norinori6791.cycledo.ui.label.adapter.LabelListAdapter
@@ -26,6 +27,11 @@ class LabelFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity?.let {
+            val fab = it?.findViewById<FloatingActionButton>(R.id.fab)
+            fab?.visibility = View.VISIBLE
+        }
+
         labelViewModel =
             ViewModelProviders.of(this).get(LabelViewModel::class.java)
         labelViewModel.onLongClickLabel.observe(this, Observer {

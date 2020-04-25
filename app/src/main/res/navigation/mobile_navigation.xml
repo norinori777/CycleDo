@@ -30,7 +30,6 @@
     <fragment
         android:id="@+id/nav_label"
         android:name="com.google.norinori6791.cycledo.ui.label.LabelFragment"
-        android:label="@string/list_label"
         tools:layout="@layout/fragment_label" >
         <action
             android:id="@+id/action_nav_label_to_nav_label_edit"
@@ -47,7 +46,6 @@
     <fragment
         android:id="@+id/nav_label_edit"
         android:name="com.google.norinori6791.cycledo.ui.labeledit.LabelEditFragment"
-        android:label="@string/list_label_edit"
         tools:layout="@layout/fragment_label_edit" >
         <action
             android:id="@+id/action_nav_label_edit_to_nav_label"
@@ -57,13 +55,11 @@
     <fragment
         android:id="@+id/nav_tools"
         android:name="com.google.norinori6791.cycledo.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
         tools:layout="@layout/fragment_tools" />
 
 
     <fragment
         android:id="@+id/nav_send"
         android:name="com.google.norinori6791.cycledo.ui.send.SendFragment"
-        android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
 </navigation>
