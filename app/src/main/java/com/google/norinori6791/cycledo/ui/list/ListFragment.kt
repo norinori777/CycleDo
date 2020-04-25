@@ -21,6 +21,7 @@ import com.google.android.material.transition.MaterialContainerTransform
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.ArticleDetailBinding
 import com.google.norinori6791.cycledo.databinding.FragmentListBinding
+import com.google.norinori6791.cycledo.model.data.Tag
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.ui.list.adapter.ItemView
 import com.google.norinori6791.cycledo.ui.list.adapter.ListConditionAdapter
@@ -39,6 +40,7 @@ class ListFragment : Fragment() {
     private lateinit var conditionDialog: ListConditionDialogFragment
     var itemView = ItemView()
     var nowTaskList: MutableList<Task> = mutableListOf()
+    var tag = Tag(null, 0, "")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +87,10 @@ class ListFragment : Fragment() {
             TransitionManager.beginDelayedTransition(showDetailDataBinding.root as ViewGroup, listTransform)
             dataBinding.listArticleDetailCardView.visibility = View.GONE
         })
+
+        arguments?.let { arguments ->
+            listViewModel.tag = arguments.getSerializable("item") as Tag
+        }
 
         dataBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_list, container, false)
 

@@ -1,5 +1,6 @@
 package com.google.norinori6791.cycledo.model.repository
 
+import com.google.norinori6791.cycledo.model.data.Tag
 import com.google.norinori6791.cycledo.model.realm.RealmTag
 import io.realm.Realm
 import io.realm.RealmResults
