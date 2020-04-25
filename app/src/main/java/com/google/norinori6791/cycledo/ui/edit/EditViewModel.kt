@@ -162,7 +162,9 @@ class EditViewModel : ViewModel() {
     }
 
     private fun isAddTag(tag: Tag): Boolean{
-        if(initialAllTag.contains(tag)) return false
+        initialAllTag?.forEach {
+            if(it.name == tag.name) return false
+        }
         return true
     }
 

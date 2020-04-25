@@ -6,6 +6,7 @@ import com.google.norinori6791.cycledo.model.realm.RealmTag
 import com.google.norinori6791.cycledo.model.realm.RealmTask
 import com.google.norinori6791.cycledo.util.NowDate
 import io.realm.Realm
+import io.realm.RealmList
 import java.util.*
 
 class TaskItem {
@@ -36,11 +37,17 @@ class TaskItem {
             val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId",task?.uniqueId).findFirst()
             updateTask?.title = task?.title
             updateTask?.content = task?.content
+
             task?.tags?.forEach { tag ->
-                var realmTag = RealmTag()
-                realmTag.deleted = tag.deleted
-                realmTag.name = tag.name
-                updateTask?.tags?.add(realmTag)
+                run {
+                    updateTask?.tags?.forEach { realmTag ->
+                        if (realmTag.name == tag.name) return@run
+                    }
+                    var realmTag = RealmTag()
+                    realmTag.deleted = tag.deleted
+                    realmTag.name = tag.name
+                    updateTask?.tags?.add(realmTag)
+                }
             }
         }
     }
