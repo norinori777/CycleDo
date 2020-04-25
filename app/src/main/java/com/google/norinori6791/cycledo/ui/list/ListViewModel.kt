@@ -17,16 +17,17 @@ class ListViewModel : ViewModel() {
 
     private val repository = TaskItems()
     private val repositoryTask = TaskItem()
-    var conditionFilter = "now"
+    private var conditionFilter = "now"
     var taskItems = MutableLiveData<MutableList<Task>>()
-    var onCompleteDelete = MutableLiveData<Boolean>()
-    var onCompleteUpdate = MutableLiveData<Boolean>()
+    private var onCompleteDelete = MutableLiveData<Boolean>()
+    private var onCompleteUpdate = MutableLiveData<Boolean>()
     var onChangeFilter = MutableLiveData<Boolean>()
     var isShowDetail = ObservableBoolean(false)
     var toEdit= MutableLiveData<Task>()
     var toShow= MutableLiveData<Task>()
     var toList = MutableLiveData<Boolean>()
     lateinit var filter: TaskFilter
+    var tag: Tag = Tag(null, 0, "")
 
     fun getTask(){
         filter = when(conditionFilter){
@@ -36,10 +37,10 @@ class ListViewModel : ViewModel() {
             ListCondition.COMPLETED.display -> CompletedTaskFilter()
             else -> NowTaskFilter()
         }
-        taskItems.postValue(realmResultToTaskList(repository.getAllTasks(), filter))
+        taskItems.postValue(realmResultToTaskList(repository.getAllTasks(), filter, HaveTagFilter()))
     }
 
-    private fun realmResultToTaskList(realmResults: RealmResults<RealmTask>, conditionFilter: TaskFilter): MutableList<Task>{
+    private fun realmResultToTaskList(realmResults: RealmResults<RealmTask>, conditionFilter: TaskFilter, tagConditionFilter: TagFilter): MutableList<Task>{
         var tasks:MutableList<Task> = mutableListOf()
         realmResults.forEach{
             var tags: MutableList<Tag> = mutableListOf()
@@ -47,6 +48,9 @@ class ListViewModel : ViewModel() {
                 tags.add(Tag(tag.uniqueId, tag.deleted, tag.name))
             }
             var task = Task(it.uniqueId, it.deleted, it.title, it.content, null, it.status, it.startDate, it.addDate, it.modifyDate, tags)
+            tag.uniqueId?.let {
+                if(tagConditionFilter.isNotMatches(task, tag)) return@forEach
+            }
             if(filter.isMatches(task)) tasks.add(task)
         }
         return tasks
