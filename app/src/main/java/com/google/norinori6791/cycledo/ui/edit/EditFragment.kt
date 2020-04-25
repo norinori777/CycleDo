@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.norinori6791.cycledo.R
@@ -37,8 +38,11 @@ class EditFragment : Fragment() {
             val toolbar = fragmentActivity.findViewById<Toolbar>(R.id.toolbar)
             appCompatActivity.setSupportActionBar(toolbar)
             appCompatActivity.supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
-            appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true);
-            appCompatActivity.supportActionBar?.setHomeButtonEnabled(true);
+            appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            appCompatActivity.supportActionBar?.setHomeButtonEnabled(true)
+
+            val fab = fragmentActivity.findViewById<FloatingActionButton>(R.id.fab)
+            fab.visibility = View.GONE
         }
 
         editViewModel =

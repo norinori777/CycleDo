@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.norinori6791.cycledo.R
@@ -47,6 +48,11 @@ class ListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity?.let {
+            val fab = it?.findViewById<FloatingActionButton>(R.id.fab)
+            fab?.visibility = View.VISIBLE
+        }
+
         listViewModel =
             ViewModelProviders.of(this).get(ListViewModel::class.java)
 
