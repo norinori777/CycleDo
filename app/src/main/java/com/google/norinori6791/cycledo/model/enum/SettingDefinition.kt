@@ -2,7 +2,7 @@ package com.google.norinori6791.cycledo.model.enum
 
 import kotlin.reflect.KClass
 
-enum class SettingDefinition(val type: KClass<*>, val defaultValue: Any, val isReset: Boolean) {
+enum class SettingDefinition(val type: KClass<*>, private val defaultValue: Any, val isReset: Boolean) {
     // 全体
     INITIALIZE(Boolean::class, true, false),
     SETTING_VERSION(Int::class, 1, false),
