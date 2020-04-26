@@ -60,7 +60,7 @@ class EditViewModel : ViewModel() {
     var isSelectedTags = ObservableBoolean(false)
     var selectedTag: MutableList<Tag> = mutableListOf()
     var allTags: MutableList<Tag> = getTags()
-    var initialAllTag: MutableList<Tag> = allTags
+    var initialAllTag: MutableList<Tag> = getTags()
 
     fun startSelectTag(){
         onSelectTag.postValue(true)
