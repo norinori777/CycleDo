@@ -14,21 +14,20 @@ class TaskItem {
     private val nowDate = NowDate()
 
     fun insertTask(task: Task){
-        var realmTask = RealmTask()
-        realmTask.title = task.title
-        realmTask.content = task.content
-        realmTask.startDate = nowDate.get()
-        realmTask.addDate = nowDate.get()
-        realmTask.modifyDate = nowDate.get()
-        task.tags?.forEach {
-            var realmTag = RealmTag()
-            realmTag.deleted = it.deleted
-            realmTag.name = it.name
-            realmTask.tags?.add(realmTag)
-        }
-
         realm.executeTransaction {
-            it.copyToRealm(realmTask)
+            var realmTask = RealmTask()
+            realmTask.title = task.title
+            realmTask.content = task.content
+            realmTask.startDate = nowDate.get()
+            realmTask.addDate = nowDate.get()
+            realmTask.modifyDate = nowDate.get()
+            task.tags?.forEach { tag ->
+                var realmTag = realm.where(RealmTag::class.java).equalTo("name", tag.name).findFirst()
+                realmTag?.let {
+                    realmTask.tags?.add(realmTag)
+                }
+            }
+            realm.copyToRealmOrUpdate(realmTask)
         }
     }
 
@@ -43,9 +42,10 @@ class TaskItem {
                     updateTask?.tags?.forEach { realmTag ->
                         if (realmTag.name == tag.name) return@run
                     }
-                    var realmTag = RealmTag()
+                    val realmTag = RealmTag()
+                    realmTag.uniqueId = tag.uniqueId
                     realmTag.deleted = tag.deleted
-                    realmTag.name = tag.name
+                    realmTag.name  = tag.name
                     updateTask?.tags?.add(realmTag)
                 }
             }
