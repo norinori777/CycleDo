@@ -6,29 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_list"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_format_list_bulleted_24"
             android:title="@string/menu_list" />
         <item
             android:id="@+id/nav_edit"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_baseline_add_circle_24"
             android:title="@string/menu_add" />
         <item
             android:id="@+id/nav_label"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_baseline_label_24"
             android:title="@string/list_label" />
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
-        </menu>
-    </item>
 
 </menu>

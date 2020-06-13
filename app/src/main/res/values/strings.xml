@@ -2,8 +2,8 @@
     <string name="app_name">CycleDo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">CycleDo －忘却曲線－</string>
+    <string name="nav_header_subtitle">絶対、忘れない！！</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="edit_menu_cycle_reset">サイクルを１つ戻す</string>
@@ -17,7 +17,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_dust">ゴミ箱</string>
     <string name="add_article_date">開始日：</string>
     <string name="update_article_date">更新日：</string>
 
@@ -43,4 +43,6 @@
     <string name="label_edit_delete">ラベル削除</string>
     <string name="label_edit_update_success">ラベルを更新しました。</string>
     <string name="label_edit_delete_success">ラベルを削除しました。</string>
+
+    <string name="setting_notification_title_message">通知時間を設定しする。</string>
 </resources>

@@ -12,8 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.transition.MaterialArcMotion
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 import com.google.norinori6791.cycledo.model.data.Task
@@ -85,7 +83,11 @@ class EditFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.fragment_edit, menu)
+        arguments?.let {
+            inflater?.inflate(R.menu.fragment_edit, menu)
+            return
+        }
+        inflater?.inflate(R.menu.fragment_add, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
