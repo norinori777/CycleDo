@@ -83,7 +83,11 @@ class EditFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.fragment_edit, menu)
+        arguments?.let {
+            inflater?.inflate(R.menu.fragment_edit, menu)
+            return
+        }
+        inflater?.inflate(R.menu.fragment_add, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
