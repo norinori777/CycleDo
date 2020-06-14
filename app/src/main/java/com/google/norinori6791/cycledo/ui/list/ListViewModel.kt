@@ -19,8 +19,9 @@ class ListViewModel : ViewModel() {
     private val repositoryTask = TaskItem()
     private var conditionFilter = "now"
     var taskItems = MutableLiveData<MutableList<Task>>()
-    private var onCompleteDelete = MutableLiveData<Boolean>()
+    var onCompleteDelete = MutableLiveData<Task>()
     private var onCompleteUpdate = MutableLiveData<Boolean>()
+    var onNotLogicalDeleteUpdate = MutableLiveData<Boolean>()
     var onChangeFilter = MutableLiveData<Boolean>()
     var isShowDetail = ObservableBoolean(false)
     var toEdit= MutableLiveData<Task>()
@@ -57,11 +58,35 @@ class ListViewModel : ViewModel() {
     }
 
     fun deleteTask(task:Task){
+        when(task.deleted){
+            0 -> {
+                logicalDeleteTask(task)
+            }
+            1 -> {
+                physicalDeleteTask(task)
+            }
+        }
+    }
+    private fun logicalDeleteTask(task:Task){
         repositoryTask.logicalDeleteTask(task)
-        onCompleteDelete.postValue(true)
+        onCompleteDelete.postValue(task)
+    }
+    private fun physicalDeleteTask(task:Task){
+        repositoryTask.physicalDeleteTask(task)
+        onCompleteDelete.postValue(task)
     }
 
     fun completeTask(task: Task){
+        when(task.deleted){
+            0 -> {
+                updateCompleteTask(task)
+            }
+            1 -> {
+                updateNotLogicalDeleteTask(task)
+            }
+        }
+    }
+    private fun updateCompleteTask(task: Task){
         for(cycleTerm in CycleTerm.values()){
             if(cycleTerm.term > task.status){
                 repositoryTask.updateStatusTask(cycleTerm.term, task)
@@ -70,6 +95,12 @@ class ListViewModel : ViewModel() {
             }
         }
     }
+    private fun updateNotLogicalDeleteTask(task: Task){
+        repositoryTask.notLogicalDeleteTask(task)
+        onNotLogicalDeleteUpdate.postValue(true)
+
+    }
+
 
     fun closeArticleDetail(){
         toList.postValue(true)

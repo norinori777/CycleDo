@@ -39,6 +39,9 @@
     <string name="list_label_all_title">全て：</string>
     <string name="list_label">ラベル</string>
     <string name="list_label_edit">ラベル編集</string>
+    <string name="list_logical_delete_complete">ゴミ箱に移動しました。</string>
+    <string name="list_physical_delete_complete">削除しました。</string>
+    <string name="list_not_logical_delete_update">ゴミ箱から戻しました。</string>
 
     <string name="label_edit_delete">ラベル削除</string>
     <string name="label_edit_update_success">ラベルを更新しました。</string>

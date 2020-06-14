@@ -29,6 +29,7 @@ import com.google.norinori6791.cycledo.ui.list.adapter.ListConditionAdapter
 import com.google.norinori6791.cycledo.ui.list.adapter.TaskListAdapter
 import com.google.norinori6791.cycledo.ui.list.dialog.ListConditionDialogFragment
 import com.google.norinori6791.cycledo.ui.list.swipe.SwipeToDeleteCallback
+import com.google.norinori6791.cycledo.util.toast.InfoToast
 
 
 class ListFragment : Fragment() {
@@ -92,6 +93,17 @@ class ListFragment : Fragment() {
 
             TransitionManager.beginDelayedTransition(showDetailDataBinding.root as ViewGroup, listTransform)
             dataBinding.listArticleDetailCardView.visibility = View.GONE
+        })
+
+        listViewModel.onCompleteDelete.observe(this, Observer {
+            when(it.deleted){
+                0 -> InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.list_logical_delete_complete))
+                1 -> InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.list_physical_delete_complete))
+            }
+        })
+
+        listViewModel.onNotLogicalDeleteUpdate.observe(this, Observer{
+            InfoToast(context!!).show(R.layout.view_toast, R.drawable.custom_toast_info, getString(R.string.list_not_logical_delete_update))
         })
 
         arguments?.let { arguments ->
