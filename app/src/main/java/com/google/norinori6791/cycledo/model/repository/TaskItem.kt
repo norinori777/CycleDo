@@ -59,6 +59,20 @@ class TaskItem {
         }
     }
 
+    fun notLogicalDeleteTask(task: Task){
+        realm.executeTransaction {
+            val deleteTask = it.where(RealmTask::class.java).equalTo("uniqueId",task.uniqueId).findFirst()
+            deleteTask?.deleted = 0
+        }
+    }
+
+    fun physicalDeleteTask(task: Task){
+        realm.executeTransaction {
+            val deleteTask = it.where(RealmTask::class.java).equalTo("uniqueId",task.uniqueId).findFirst()
+            deleteTask?.deleteFromRealm()
+        }
+    }
+
     fun updateStatusTask(nextStatus: Int, task: Task){
         realm.executeTransaction{
             val updateTask = it.where(RealmTask::class.java).equalTo("uniqueId", task.uniqueId).findFirst()
