@@ -1,7 +1,11 @@
 package com.google.norinori6791.cycledo.ui.edit
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,7 +20,9 @@ import com.google.norinori6791.cycledo.R
 import com.google.norinori6791.cycledo.databinding.FragmentEditBinding
 import com.google.norinori6791.cycledo.model.data.Task
 import com.google.norinori6791.cycledo.ui.edit.dialog.SelectTagDialogFragment
+import com.google.norinori6791.cycledo.util.IntentPicture
 import com.google.norinori6791.cycledo.util.toast.InfoToast
+import java.io.ByteArrayOutputStream
 
 class EditFragment : Fragment() {
 
@@ -24,6 +30,7 @@ class EditFragment : Fragment() {
     private lateinit var dataBinding: FragmentEditBinding
     private lateinit var task: Task
     private lateinit var selectTagDialog: SelectTagDialogFragment
+    private val resultCamera = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,6 +106,26 @@ class EditFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == resultCamera){
+            data?.let {
+
+                val captureImage: Bitmap = it.extras?.get("data") as Bitmap
+                val stream = ByteArrayOutputStream()
+                captureImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val tag = "data:image/" + Bitmap.CompressFormat.PNG + ";base64, "
+                val byteFormat: ByteArray = stream.toByteArray()
+                val imgString: String = Base64.encodeToString(byteFormat, Base64.DEFAULT)
+
+
+                //dataBinding.richEditor.insertImage(captureImage, "aaa")
+                //dataBinding.richEditor.insertImage(tag + imgString, "")
+                dataBinding.richEditor.html = dataBinding.richEditor.html + "<image src=\"$tag $imgString\" />"
+            }
+        }
     }
 
     private fun taskCrudObserve(){
@@ -194,8 +221,17 @@ class EditFragment : Fragment() {
             dataBinding.richEditor.setBlockquote()
         })
         editViewModel.insertImage.observe(this, Observer {
-            dataBinding.richEditor.insertImage("http://www.test.co.jp", "aaa")
-        })
+            val intentPicture = IntentPicture()
+            activity?.let { fragmentActivity ->
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                    takePictureIntent.resolveActivity(context!!.packageManager)?.also {
+                        val requestImageCapture = 1
+                        super.startActivityForResult(takePictureIntent, requestImageCapture)
+                    }
+//                var appCompatActivity = fragmentActivity as AppCompatActivity
+//                intentPicture.dispatchTakePictureIntent(appCompatActivity, context!!)
+            }
+        }})
         editViewModel.insertLink.observe(this, Observer {
             dataBinding.richEditor.insertLink("http://www.test.co.jp", "aaa")
         })
@@ -207,5 +243,12 @@ class EditFragment : Fragment() {
     private fun setDialog() {
         selectTagDialog = SelectTagDialogFragment(context!!, editViewModel)
         selectTagDialog.setStyle(R.style.TagDialogStyle, DialogFragment.STYLE_NO_TITLE)
+    }
+
+    private fun startCamera(){
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if(intent.resolveActivity(context!!.packageManager) != null){
+            startActivityForResult(intent, resultCamera)
+        }
     }
 }
